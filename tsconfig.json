@@ -1,5 +1,6 @@
 {
-  "compilerOptions": {
+  "compilerOptions": 
+  {
     // --- Telling TypeScript about your project ---
     "allowJs": true, // Allow JavaScript files to be processed.
     "checkJs": false, // Report errors in .js files.
@@ -16,15 +17,21 @@
     // --- Module resolution options ---
     "module": "ESNext",
     "moduleResolution": "node",
-    "esModuleInterop": true,
+    "esModuleInterop": true,    
+    
+    // --- Specify type libraries to include ---
+    // This resolves errors for missing 'node' and 'jsdom' types used by Jest.
+    "types": ["jest", "node"],
 
     // --- Target ECMAScript version ---
     "target": "ES2020"
   },
-  "include": [
+  "include": 
+  [
     "src/**/*" // Process all files in the src directory.
   ],
-  "exclude": [
+  "exclude": 
+  [
     "node_modules",
     "tests",
     "examples",
