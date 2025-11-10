@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    // --- Telling TypeScript about your project ---
+    "allowJs": true, // Allow JavaScript files to be processed.
+    "checkJs": false, // Report errors in .js files.
+    "maxNodeModuleJsDepth": 0, // Only check first-level JS dependencies in node_modules.
+
+    // --- Type-checking options ---
+    "strict": true, // Enable all strict type-checking options.
+
+    // --- Output options ---
+    "declaration": true, // Generate corresponding '.d.ts' file.
+    "emitDeclarationOnly": true, // Only emit '.d.ts' files; do not emit '.js' files.
+    "outDir": "dist/types", // Redirect output structure to the directory.
+
+    // --- Module resolution options ---
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+
+    // --- Target ECMAScript version ---
+    "target": "ES2020"
+  },
+  "include": [
+    "src/**/*" // Process all files in the src directory.
+  ],
+  "exclude": [
+    "node_modules",
+    "tests",
+    "examples",
+    "coverage",
+    "vendor"
+  ]
+}

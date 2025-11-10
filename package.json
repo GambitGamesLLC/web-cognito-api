@@ -1,0 +1,30 @@
+{
+  "name": "web-aws-cognito-api",
+  "version": "0.0.1",
+  "description": "API Manager for AWS Cognito Services",
+  "main": "src/index.js",
+  "types": "dist/types/src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.js",
+      "types": "./dist/types/src/index.d.ts"
+    }
+  },
+  "type": "module",
+  "files": [
+    "src",
+    "vendor",
+    "dist"
+  ],
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
+    "build:types": "tsc"
+  },
+  "devDependencies": {
+    "jest": "29.7.0",
+    "jest-environment-jsdom": "29.7.0",
+    "msw": "2.10.5",
+    "typescript": "5.9.3",
+    "whatwg-fetch": "3.6.20"
+  }
+}
