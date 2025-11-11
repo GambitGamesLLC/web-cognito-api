@@ -84,17 +84,19 @@ export class CognitoApiManager
 
     /**
      * Sets the Amplify configuration file
+     * 
+     * @documentation https://docs.amplify.aws/javascript/start/connect-to-aws-resources/
+     * 
      * @param {ResourcesConfig} config The 'amplifyconfiguration.json' config file
-     * @returns void
+     * @returns {Promise<ResourcesConfig>} The resources configuration set up with Amplify
      */
     // ----------------------------------------------------------------- //
-    Configure( config ) 
+    async Configure( config ) 
     // ----------------------------------------------------------------- //
     {
         if( config === undefined || config === null )
         {
-            console.log( "cognito-api-manager.js Configure() passed in 'config' parameter is undefined or null");
-            return;
+            Promise.reject( new Error( "cognito-api-manager.js Configure() passed in 'config' parameter is undefined or null" ) );
         }
 
         try
@@ -104,12 +106,11 @@ export class CognitoApiManager
              */
             Amplify.configure(config);
 
-            // Debug the configuration file
-            console.log( Amplify.getConfig() );
+            return Amplify.getConfig();
         }
         catch(error)
         {
-            console.log( "cognito-api-manager.js Configure() Error: " + error);
+            Promise.reject( new Error( "cognito-api-manager.js Configure() Error: " + error ) );
         }
         
     } //END Configure() Method
@@ -120,9 +121,12 @@ export class CognitoApiManager
 
     /**
      * Creates a new user within the user pool
+     * 
+     * @documentation https://docs.amplify.aws/javascript/build-a-backend/auth/connect-your-frontend/sign-up/
+     * 
      * @param {string} username The name for the new user
      * @param {string} password The password for the new user
-     * @param {object} attributes An object of user attributes, e.g., { email: 'user@example.com' }
+     * @param {object | null} attributes [Optional] An object of user attributes, e.g., { email: 'user@example.com' }
      * @returns {Promise<SignUpOutput['nextStep']>} The 'nextStep' property returned by Amplify after a user is successfully created in the user pool
      */
     // ----------------------------------------------------------------- //
@@ -141,7 +145,7 @@ export class CognitoApiManager
 
         if (attributes === undefined || attributes === null) 
         {
-            return Promise.reject( new Error("cognito-api-manager.js CreateUser() Error: attributes cannot be null or undefined." ) );
+            attributes = {};
         }
 
         try

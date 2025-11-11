@@ -10,6 +10,10 @@
 // Import directly from the source file for local testing
 import { CognitoApiManager } from '../src/index.js';
 
+/**
+ * @typedef {import('@aws-amplify/core').ResourcesConfig} ResourcesConfig
+ */
+
 //#endregion
 
 //#region PRIVATE - VARIABLES
@@ -115,7 +119,12 @@ async function CreateCognitoApi()
     const response = await fetch('./amplifyconfiguration.json');
     const config = await response.json();
 
-    cognitoApiManager.Configure(config);
+    /**
+     * @type ResourcesConfig
+     */
+    let resourcesConfig = await cognitoApiManager.Configure(config);
+
+    console.log(resourcesConfig);
 
     await cognitoApiManager.CreateUser( "TestUser", "Test!@2025" );
 
