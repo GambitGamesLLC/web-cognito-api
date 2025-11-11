@@ -1,12 +1,12 @@
 {
-  "name": "web-aws-cognito-api",
+  "name": "web-cognito-api",
   "version": "0.0.1",
   "description": "API Manager for AWS Cognito Services",
-  "main": "dist/web-aws-cognito-api.js",
+  "main": "dist/web-cognito-api.js",
   "types": "dist/types/src/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/web-aws-cognito-api.js",
+      "import": "./dist/web-cognito-api.js",
       "types": "./dist/types/src/index.d.ts"
     }
   },
