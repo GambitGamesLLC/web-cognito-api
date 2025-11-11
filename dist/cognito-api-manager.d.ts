@@ -1,4 +1,7 @@
 /**
+ * @typedef {import('@aws-amplify/core').ResourcesConfig} ResourcesConfig
+ */
+/**
  * Singleton class for interacting with the Cognito API
  * @class
  */
@@ -14,4 +17,4 @@ export class CognitoApiManager {
      */
     Configure(config: ResourcesConfig): void;
 }
-import { ResourcesConfig } from 'aws-amplify';
+export type ResourcesConfig = import("@aws-amplify/core").ResourcesConfig;

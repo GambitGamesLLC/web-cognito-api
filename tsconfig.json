@@ -12,7 +12,7 @@
     // --- Output options ---
     "declaration": true, // Generate corresponding '.d.ts' file.
     "emitDeclarationOnly": true, // Only emit '.d.ts' files; do not emit '.js' files.
-    "outDir": "dist/types", // Redirect output structure to the directory.
+    "outDir": "dist", // Redirect output structure to the directory.
 
     // --- Module resolution options ---
     "module": "ESNext",

@@ -8,12 +8,16 @@
 //#region IMPORTS
 
 // Import directly from the source file for local testing
-import { CognitoApiManager } from '../src/cognito-api-manager.js';
-import { config } from './amplifyconfiguration.json'
+import { CognitoApiManager } from '../src/index.js';
 
 //#endregion
 
 //#region PRIVATE - VARIABLES
+
+/**
+ * @type{boolean} Has the Initialization of this script occured?
+ */
+let initialized = false;
 
 //#endregion
 
@@ -26,19 +30,45 @@ import { config } from './amplifyconfiguration.json'
  * Methods attached to it from other scripts. 
  */
 //-----------------------------------------------------//
-document.addEventListener('DOMContentLoaded', () => 
+document.addEventListener('DOMContentLoaded', async () => 
 //-----------------------------------------------------//
 {
+
+    console.log( "DOMContentLoaded Event Listener" );
+
+    await Initialize();
+
+}); //END DOMContentLoaded Event Listener Hook
+
+//#endregion
+
+//#region PRIVATE - INITIALIZE
+
+/**
+ * Initializes this script. Can only run once
+ */
+//-------------------------------------//
+function Initialize()
+//-------------------------------------//
+{
+    if( initialized )
+    {
+        return;
+    }
+
+    initialized = true;
+
+    console.log( "cognito-api-manager /examples/index.js Initialize() initialized: " + initialized );
+
     AttachDomReferences();
 
     AddEventListeners();
 
     CreateCognitoApi();
 
-}); //END DOMContentLoaded Event Listener Hook
+} //END Initialize() Function
 
 //#endregion
-
 
 //#region PRIVATE - GET DOM REFERENCES
 
@@ -76,12 +106,19 @@ function AddEventListeners()
  * Creates the Cognito API client, preparring it for use
  */
 //-------------------------------------------------------//
-function CreateCognitoApi()
+async function CreateCognitoApi()
 //-------------------------------------------------------//
 {
     let cognitoApiManager = CognitoApiManager.GetInstance();
+
+    // Fetch the JSON file
+    const response = await fetch('./amplifyconfiguration.json');
+    const config = await response.json();
+
     cognitoApiManager.Configure(config);
 
 } //END CreateCognitoApi() Method
 
 //#endregion
+
+await Initialize();

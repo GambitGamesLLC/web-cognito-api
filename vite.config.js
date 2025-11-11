@@ -1,27 +1,37 @@
 import { defineConfig } from 'vite';
-import path from 'path';
-import fs from 'fs';
+import path from 'node:path';
 
-const vendorDir = path.resolve(__dirname, 'vendor');
-const vendorPackages = fs.readdirSync(vendorDir);
-
-const alias = vendorPackages.reduce((acc, dir) => {
-  const packagePath = path.join(vendorDir, dir);
-  if (fs.statSync(packagePath).isDirectory()) {
-    const packageJsonPath = path.join(packagePath, 'package.json');
-    if (fs.existsSync(packageJsonPath)) {
-      const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
-      // Resolve to the main export or module export if available
-      const entry = packageJson.module || packageJson.main || 'index.js';
-      acc[dir] = path.resolve(packagePath, entry);
-    }
-  }
-  return acc;
-}, {});
-
+// https://vitejs.dev/config/
 export default defineConfig({
-  resolve: {
-    alias,
+  root: 'examples',
+  server: {
+    port: 8100,
+    host: 'localhost',
   },
-  // Your other Vite config...
+  build: {
+    // Generate a source map for easier debugging.
+    sourcemap: true,
+    // Configure the library build.
+    lib: {
+      // The entry point for the library.
+      entry: path.resolve(__dirname, 'src/index.js'),
+      // The name of the global variable when used in a UMD build.
+      name: 'WebCognitoApi',
+      // The output formats for the library. 'es' is for ESM.
+      formats: ['es'],
+      // The base name for the output file(s).
+      fileName: (format) => `web-cognito-api.${format}.js`,
+    },
+    rollupOptions: {
+      // Make sure to externalize dependencies that shouldn't be bundled
+      // into your library. This is crucial for libraries.
+      external: ['@aws-amplify/auth', '@aws-amplify/core'],
+      output: {
+        // Provide global variables to use in the UMD build
+        // for externalized deps. Not strictly needed for ESM-only builds,
+        // but good practice if you add other formats later.
+        globals: {},
+      },
+    },
+  },
 });

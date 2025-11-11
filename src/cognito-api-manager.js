@@ -9,7 +9,11 @@
 //#region IMPORTS
 
 // Importing Amplify From the AWS Amplify Lib
-import { Amplify, ResourcesConfig } from '@aws-amplify/core';
+import { Amplify } from '@aws-amplify/core';
+
+/**
+ * @typedef {import('@aws-amplify/core').ResourcesConfig} ResourcesConfig
+ */
 
 //#endregion
 
@@ -81,14 +85,21 @@ export class CognitoApiManager
     Configure( config ) 
     // ----------------------------------------------------------------- //
     {
-        /**
-         * Passes our configuration file into the core Amplify object
-         */
-        Amplify.configure(config);
-
-        // Debug the configuration file
-        console.log(config);
-
+        try
+        {
+            /**
+             * Passes our configuration file into the core Amplify object
+             */
+            Amplify.configure(config);
+            
+            // Debug the configuration file
+            //console.log(config);
+        }
+        catch(error)
+        {
+            console.log( "cognito-api-manager.js Configure() Error: " + error);
+        }
+        
     } //END Configure() Method
 
     //#endregion
