@@ -34,39 +34,11 @@ document.addEventListener('DOMContentLoaded', async () =>
 //-----------------------------------------------------//
 {
 
-    console.log( "DOMContentLoaded Event Listener" );
+    //console.log( "DOMContentLoaded Event Listener" );
 
     await Initialize();
 
 }); //END DOMContentLoaded Event Listener Hook
-
-//#endregion
-
-//#region PRIVATE - INITIALIZE
-
-/**
- * Initializes this script. Can only run once
- */
-//-------------------------------------//
-function Initialize()
-//-------------------------------------//
-{
-    if( initialized )
-    {
-        return;
-    }
-
-    initialized = true;
-
-    console.log( "cognito-api-manager /examples/index.js Initialize() initialized: " + initialized );
-
-    AttachDomReferences();
-
-    AddEventListeners();
-
-    CreateCognitoApi();
-
-} //END Initialize() Function
 
 //#endregion
 
@@ -100,6 +72,34 @@ function AddEventListeners()
 
 //#endregion
 
+//#region PRIVATE - INITIALIZE
+
+/**
+ * Initializes this script. Can only run once
+ */
+//-------------------------------------//
+function Initialize()
+//-------------------------------------//
+{
+    if( initialized )
+    {
+        return;
+    }
+
+    initialized = true;
+
+    console.log( "cognito-api-manager /examples/index.js Initialize() initialized: " + initialized );
+
+    AttachDomReferences();
+
+    AddEventListeners();
+
+    CreateCognitoApi();
+
+} //END Initialize() Function
+
+//#endregion
+
 //#region PRIVATE - CREATE COGNITO API CLIENT
 
 /**
@@ -117,8 +117,8 @@ async function CreateCognitoApi()
 
     cognitoApiManager.Configure(config);
 
+    await cognitoApiManager.CreateUser( "TestUser", "Test!@2025" );
+
 } //END CreateCognitoApi() Method
 
 //#endregion
-
-await Initialize();

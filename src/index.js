@@ -13,6 +13,8 @@ export { CognitoApiManager } from './cognito-api-manager.js';
 // This allows JSDoc-aware editors to find and use
 // the JSDoc @typedefs for type checking
 
+export * from './cognito-api-manager.js'; // This is for the class
+export * from './cognito-api-manager.js'; // This is for the types
 
 // Re-export the type definitions from the 'joi' schemas
 
