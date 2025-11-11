@@ -124,10 +124,10 @@ export class CognitoApiManager
      * 
      * @documentation https://docs.amplify.aws/javascript/build-a-backend/auth/connect-your-frontend/sign-up/
      * 
-     * @param {string} username The name for the new user
+     * @param {string} username The name for the new user. May either be a 
      * @param {string} password The password for the new user
      * @param {object | null} attributes [Optional] An object of user attributes, e.g., { email: 'user@example.com' }
-     * @returns {Promise<SignUpOutput['nextStep']>} The 'nextStep' property returned by Amplify after a user is successfully created in the user pool
+     * @returns {Promise<SignUpOutput>} The 'SignUpOutput' property returned by Amplify after a user is successfully created in the user pool
      */
     // ----------------------------------------------------------------- //
     async CreateUser( username, password, attributes ) 
@@ -150,7 +150,10 @@ export class CognitoApiManager
 
         try
         {
-            const { userId, nextStep } = await signUp
+            /**
+             * @type {SignUpOutput} The output of the Amplify signUp request
+             */
+            let signUpOutput = await signUp
             ({
                 username,
                 password,
@@ -161,10 +164,10 @@ export class CognitoApiManager
                 }
             });
 
-            console.log(`cognito-api-manager.js CreateUser() Successfully signed up user ${userId}`);
-            console.log('cognito-api-manager.js CreateUser() Next step:', nextStep);
+            console.log(`cognito-api-manager.js CreateUser() Successfully signed up user ${signUpOutput.userId}`);
+            console.log('cognito-api-manager.js CreateUser() Next step:', signUpOutput.nextStep);
 
-            return nextStep;
+            return signUpOutput;
         }
         catch(error)
         {
@@ -174,6 +177,5 @@ export class CognitoApiManager
     } //END CreateUser() Method
 
     //#endregion
-
 
 } //END CognitoApiManager Class

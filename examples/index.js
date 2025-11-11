@@ -12,6 +12,7 @@ import { CognitoApiManager } from '../src/index.js';
 
 /**
  * @typedef {import('@aws-amplify/core').ResourcesConfig} ResourcesConfig
+ * @typedef {import('@aws-amplify/auth').SignUpOutput} SignUpOutput
  */
 
 //#endregion
@@ -119,14 +120,26 @@ async function CreateCognitoApi()
     const response = await fetch('./amplifyconfiguration.json');
     const config = await response.json();
 
-    /**
-     * @type ResourcesConfig
-     */
-    let resourcesConfig = await cognitoApiManager.Configure(config);
+    try
+    {
+        /**
+         * @type ResourcesConfig
+         */
+        let resourcesConfig = await cognitoApiManager.Configure(config);
 
-    console.log(resourcesConfig);
+        console.log(resourcesConfig);
 
-    await cognitoApiManager.CreateUser( "TestUser", "Test!@2025" );
+        /**
+         * @type SignUpOutput
+         */
+        let signUpOutput = await cognitoApiManager.CreateUser( "TestUser@gmail.com", "Test!@2025" );
+
+        console.log(signUpOutput);
+    }
+    catch( error )
+    {
+        console.log( error );
+    }
 
 } //END CreateCognitoApi() Method
 
