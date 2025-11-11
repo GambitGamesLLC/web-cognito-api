@@ -1,2 +1,1 @@
-export { Amplify };
-import { Amplify } from 'aws-amplify';
+export { CognitoApiManager } from "./cognito-api-manager.js";

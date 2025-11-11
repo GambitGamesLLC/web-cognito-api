@@ -1,9 +1,9 @@
-const Vt = "Logging", Wt = "NoHubcallbackProvidedException";
+const Vt = "Logging", Gt = "NoHubcallbackProvidedException";
 var S;
 (function(t) {
   t.DEBUG = "DEBUG", t.ERROR = "ERROR", t.INFO = "INFO", t.WARN = "WARN", t.VERBOSE = "VERBOSE", t.NONE = "NONE";
 })(S || (S = {}));
-const Ce = {
+const ve = {
   VERBOSE: 1,
   DEBUG: 2,
   INFO: 3,
@@ -39,8 +39,8 @@ class w {
   _log(e, ...n) {
     let o = this.level;
     w.LOG_LEVEL && (o = w.LOG_LEVEL), typeof window < "u" && window.LOG_LEVEL && (o = window.LOG_LEVEL);
-    const i = Ce[o];
-    if (!(Ce[e] >= i))
+    const i = ve[o];
+    if (!(ve[e] >= i))
       return;
     let r = console.log.bind(console);
     e === S.ERROR && console.error && (r = console.error.bind(console)), e === S.WARN && console.warn && (r = console.warn.bind(console)), w.BIND_ALL_LOG_LEVELS && (e === S.INFO && console.info && (r = console.info.bind(console)), e === S.DEBUG && console.debug && (r = console.debug.bind(console)));
@@ -140,11 +140,11 @@ class C extends Error {
     this.constructor = C, Object.setPrototypeOf(this, C.prototype);
   }
 }
-var b;
+var O;
 (function(t) {
   t.NoEndpointId = "NoEndpointId", t.PlatformNotSupported = "PlatformNotSupported", t.Unknown = "Unknown", t.NetworkError = "NetworkError";
-})(b || (b = {}));
-const Xe = (t, e = C) => (n, o, i) => {
+})(O || (O = {}));
+const Ze = (t, e = C) => (n, o, i) => {
   const { message: s, recoverySuggestion: r } = t[o];
   if (!n)
     throw new e({
@@ -201,7 +201,7 @@ class $t {
     let i;
     if (typeof n != "function")
       throw new C({
-        name: Wt,
+        name: Gt,
         message: "No callback supplied to Hub"
       });
     i = n;
@@ -225,7 +225,7 @@ class $t {
     });
   }
 }
-const oe = new $t("__default__"), Gt = () => {
+const ie = new $t("__default__"), Wt = () => {
   if (typeof window < "u" && typeof window.atob == "function")
     return window.atob;
   if (typeof atob == "function")
@@ -237,14 +237,14 @@ const oe = new $t("__default__"), Gt = () => {
 }, Ft = {
   convert(t, e) {
     let n = t;
-    return e?.urlSafe && (n = n.replace(/-/g, "+").replace(/_/g, "/")), Gt()(n);
+    return e?.urlSafe && (n = n.replace(/-/g, "+").replace(/_/g, "/")), Wt()(n);
   }
 };
 var T;
 (function(t) {
   t.AuthTokenConfigException = "AuthTokenConfigException", t.AuthUserPoolAndIdentityPoolException = "AuthUserPoolAndIdentityPoolException", t.AuthUserPoolException = "AuthUserPoolException", t.InvalidIdentityPoolIdException = "InvalidIdentityPoolIdException", t.OAuthNotConfigureException = "OAuthNotConfigureException";
 })(T || (T = {}));
-const jt = {
+const Bt = {
   [T.AuthTokenConfigException]: {
     message: "Auth Token Provider not configured.",
     recoverySuggestion: "Make sure to call Amplify.configure in your app."
@@ -265,16 +265,16 @@ const jt = {
     message: "oauth param not configured.",
     recoverySuggestion: "Make sure to call Amplify.configure with oauth parameter in your app."
   }
-}, Ze = Xe(jt);
+}, et = Ze(Bt);
 function m(t) {
   let e = !0;
-  t ? e = !!t.userPoolId && !!t.userPoolClientId : e = !1, Ze(e, T.AuthUserPoolException);
+  t ? e = !!t.userPoolId && !!t.userPoolClientId : e = !1, et(e, T.AuthUserPoolException);
 }
-function F(t) {
+function B(t) {
   const e = !!t?.identityPoolId;
-  Ze(e, T.InvalidIdentityPoolIdException);
+  et(e, T.InvalidIdentityPoolIdException);
 }
-function U(t) {
+function N(t) {
   const e = t.split(".");
   if (e.length !== 3)
     throw new Error("Invalid token");
@@ -288,14 +288,14 @@ function U(t) {
     throw new Error("Invalid token payload");
   }
 }
-const et = (t) => {
+const tt = (t) => {
   const e = Reflect.ownKeys(t);
   for (const n of e) {
     const o = t[n];
-    (o && typeof o == "object" || typeof o == "function") && et(o);
+    (o && typeof o == "object" || typeof o == "function") && tt(o);
   }
   return Object.freeze(t);
-}, Bt = new w("parseAWSExports"), zt = {
+}, jt = new w("parseAWSExports"), zt = {
   API_KEY: "apiKey",
   AWS_IAM: "iam",
   AMAZON_COGNITO_USER_POOLS: "userPool",
@@ -315,34 +315,34 @@ const et = (t) => {
       message: "Invalid config parameter.",
       recoverySuggestion: "Ensure passing the config object imported from  `amplifyconfiguration.json`."
     });
-  const { aws_appsync_apiKey: e, aws_appsync_authenticationType: n, aws_appsync_graphqlEndpoint: o, aws_appsync_region: i, aws_bots_config: s, aws_cognito_identity_pool_id: r, aws_cognito_sign_up_verification_method: a, aws_cognito_mfa_configuration: c, aws_cognito_mfa_types: d, aws_cognito_password_protection_settings: u, aws_cognito_verification_mechanisms: I, aws_cognito_signup_attributes: f, aws_cognito_social_providers: v, aws_cognito_username_attributes: A, aws_mandatory_sign_in: At, aws_mobile_analytics_app_id: ge, aws_mobile_analytics_app_region: kt, aws_user_files_s3_bucket: fe, aws_user_files_s3_bucket_region: Pt, aws_user_files_s3_dangerously_connect_to_http_endpoint_for_testing: Rt, aws_user_pools_id: pe, aws_user_pools_web_client_id: bt, geo: ye, oauth: Q, predictions: R, aws_cloud_logic_custom: Ie, Notifications: Ot, modelIntrospection: me } = t, p = {};
-  ge && (p.Analytics = {
+  const { aws_appsync_apiKey: e, aws_appsync_authenticationType: n, aws_appsync_graphqlEndpoint: o, aws_appsync_region: i, aws_bots_config: s, aws_cognito_identity_pool_id: r, aws_cognito_sign_up_verification_method: a, aws_cognito_mfa_configuration: c, aws_cognito_mfa_types: d, aws_cognito_password_protection_settings: u, aws_cognito_verification_mechanisms: I, aws_cognito_signup_attributes: f, aws_cognito_social_providers: v, aws_cognito_username_attributes: A, aws_mandatory_sign_in: At, aws_mobile_analytics_app_id: fe, aws_mobile_analytics_app_region: kt, aws_user_files_s3_bucket: pe, aws_user_files_s3_bucket_region: Pt, aws_user_files_s3_dangerously_connect_to_http_endpoint_for_testing: Rt, aws_user_pools_id: ye, aws_user_pools_web_client_id: bt, geo: Ie, oauth: X, predictions: b, aws_cloud_logic_custom: me, Notifications: Ot, modelIntrospection: Se } = t, p = {};
+  fe && (p.Analytics = {
     Pinpoint: {
-      appId: ge,
+      appId: fe,
       region: kt
     }
   });
-  const { InAppMessaging: X, Push: Z } = Ot ?? {};
-  if (X?.AWSPinpoint || Z?.AWSPinpoint) {
-    if (X?.AWSPinpoint) {
-      const { appId: h, region: P } = X.AWSPinpoint;
+  const { InAppMessaging: Z, Push: ee } = Ot ?? {};
+  if (Z?.AWSPinpoint || ee?.AWSPinpoint) {
+    if (Z?.AWSPinpoint) {
+      const { appId: h, region: R } = Z.AWSPinpoint;
       p.Notifications = {
         InAppMessaging: {
           Pinpoint: {
             appId: h,
-            region: P
+            region: R
           }
         }
       };
     }
-    if (Z?.AWSPinpoint) {
-      const { appId: h, region: P } = Z.AWSPinpoint;
+    if (ee?.AWSPinpoint) {
+      const { appId: h, region: R } = ee.AWSPinpoint;
       p.Notifications = {
         ...p.Notifications,
         PushNotification: {
           Pinpoint: {
             appId: h,
-            region: P
+            region: R
           }
         }
       };
@@ -352,20 +352,20 @@ const et = (t) => {
     LexV1: Object.fromEntries(s.map((h) => [h.name, h]))
   }), o) {
     const h = zt[n];
-    h || Bt.debug(`Invalid authentication type ${n}. Falling back to IAM.`), p.API = {
+    h || jt.debug(`Invalid authentication type ${n}. Falling back to IAM.`), p.API = {
       GraphQL: {
         endpoint: o,
         apiKey: e,
         region: i,
         defaultAuthMode: h ?? "iam"
       }
-    }, me && (p.API.GraphQL.modelIntrospection = me);
+    }, Se && (p.API.GraphQL.modelIntrospection = Se);
   }
-  const xt = c ? {
+  const Dt = c ? {
     status: c && c.toLowerCase(),
     totpEnabled: d?.includes("TOTP") ?? !1,
     smsEnabled: d?.includes("SMS") ?? !1
-  } : void 0, Dt = u ? {
+  } : void 0, xt = u ? {
     minLength: u.passwordPolicyMinLength,
     requireLowercase: u.passwordPolicyCharacters?.includes("REQUIRES_LOWERCASE") ?? !1,
     requireUppercase: u.passwordPolicyCharacters?.includes("REQUIRES_UPPERCASE") ?? !1,
@@ -374,45 +374,45 @@ const et = (t) => {
   } : void 0, Mt = Array.from(/* @__PURE__ */ new Set([
     ...I ?? [],
     ...f ?? []
-  ])).reduce((h, P) => ({
+  ])).reduce((h, R) => ({
     ...h,
     // All user attributes generated by the CLI are required
-    [P.toLowerCase()]: { required: !0 }
-  }), {}), Se = A?.includes("EMAIL") ?? !1, we = A?.includes("PHONE_NUMBER") ?? !1;
-  (r || pe) && (p.Auth = {
+    [R.toLowerCase()]: { required: !0 }
+  }), {}), we = A?.includes("EMAIL") ?? !1, _e = A?.includes("PHONE_NUMBER") ?? !1;
+  (r || ye) && (p.Auth = {
     Cognito: {
       identityPoolId: r,
       allowGuestAccess: At !== "enable",
       signUpVerificationMethod: a,
       userAttributes: Mt,
       userPoolClientId: bt,
-      userPoolId: pe,
-      mfa: xt,
-      passwordFormat: Dt,
+      userPoolId: ye,
+      mfa: Dt,
+      passwordFormat: xt,
       loginWith: {
-        username: !(Se || we),
-        email: Se,
-        phone: we
+        username: !(we || _e),
+        email: we,
+        phone: _e
       }
     }
   });
-  const Kt = Q ? Object.keys(Q).length > 0 : !1, Ut = v ? v.length > 0 : !1;
+  const Kt = X ? Object.keys(X).length > 0 : !1, Ut = v ? v.length > 0 : !1;
   if (p.Auth && Kt && (p.Auth.Cognito.loginWith = {
     ...p.Auth.Cognito.loginWith,
     oauth: {
-      ...qt(Q),
+      ...qt(X),
       ...Ut && {
         providers: Jt(v)
       }
     }
-  }), fe && (p.Storage = {
+  }), pe && (p.Storage = {
     S3: {
-      bucket: fe,
+      bucket: pe,
       region: Pt,
       dangerouslyConnectToHttpEndpointForTesting: Rt
     }
-  }), ye) {
-    const { amazon_location_service: h } = ye;
+  }), Ie) {
+    const { amazon_location_service: h } = Ie;
     p.Geo = {
       LocationService: {
         maps: h.maps,
@@ -422,38 +422,38 @@ const et = (t) => {
       }
     };
   }
-  if (Ie && (p.API = {
+  if (me && (p.API = {
     ...p.API,
-    REST: Ie.reduce((h, P) => {
-      const { name: Nt, endpoint: Lt, region: _e, service: Ee } = P;
+    REST: me.reduce((h, R) => {
+      const { name: Nt, endpoint: Lt, region: Ee, service: Ce } = R;
       return {
         ...h,
         [Nt]: {
           endpoint: Lt,
-          ...Ee ? { service: Ee } : void 0,
-          ..._e ? { region: _e } : void 0
+          ...Ce ? { service: Ce } : void 0,
+          ...Ee ? { region: Ee } : void 0
         }
       };
     }, {})
-  }), R) {
-    const { VoiceId: h } = R?.convert?.speechGenerator?.defaults ?? {};
+  }), b) {
+    const { VoiceId: h } = b?.convert?.speechGenerator?.defaults ?? {};
     p.Predictions = h ? {
-      ...R,
+      ...b,
       convert: {
-        ...R.convert,
+        ...b.convert,
         speechGenerator: {
-          ...R.convert.speechGenerator,
+          ...b.convert.speechGenerator,
           defaults: { voiceId: h }
         }
       }
-    } : R;
+    } : b;
   }
   return p;
-}, ve = (t) => t?.split(",") ?? [], qt = ({ domain: t, scope: e, redirectSignIn: n, redirectSignOut: o, responseType: i }) => ({
+}, Te = (t) => t?.split(",") ?? [], qt = ({ domain: t, scope: e, redirectSignIn: n, redirectSignOut: o, responseType: i }) => ({
   domain: t,
   scopes: e,
-  redirectSignIn: ve(n),
-  redirectSignOut: ve(o),
+  redirectSignIn: Te(n),
+  redirectSignOut: Te(o),
   responseType: i
 }), Jt = (t) => t.map((e) => {
   const n = e.toLowerCase();
@@ -464,20 +464,20 @@ for (let t = 0; t < 256; ++t)
 function Qt(t, e = 0) {
   return (y[t[e + 0]] + y[t[e + 1]] + y[t[e + 2]] + y[t[e + 3]] + "-" + y[t[e + 4]] + y[t[e + 5]] + "-" + y[t[e + 6]] + y[t[e + 7]] + "-" + y[t[e + 8]] + y[t[e + 9]] + "-" + y[t[e + 10]] + y[t[e + 11]] + y[t[e + 12]] + y[t[e + 13]] + y[t[e + 14]] + y[t[e + 15]]).toLowerCase();
 }
-let ee;
+let te;
 const Xt = new Uint8Array(16);
 function Zt() {
-  if (!ee) {
+  if (!te) {
     if (typeof crypto > "u" || !crypto.getRandomValues)
       throw new Error("crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported");
-    ee = crypto.getRandomValues.bind(crypto);
+    te = crypto.getRandomValues.bind(crypto);
   }
-  return ee(Xt);
+  return te(Xt);
 }
-const en = typeof crypto < "u" && crypto.randomUUID && crypto.randomUUID.bind(crypto), Te = { randomUUID: en };
+const en = typeof crypto < "u" && crypto.randomUUID && crypto.randomUUID.bind(crypto), Ae = { randomUUID: en };
 function tn(t, e, n) {
-  if (Te.randomUUID && !e && !t)
-    return Te.randomUUID();
+  if (Ae.randomUUID && !e && !t)
+    return Ae.randomUUID();
   t = t || {};
   const o = t.random ?? t.rng?.() ?? Zt();
   if (o.length < 16)
@@ -578,7 +578,7 @@ function cn(t) {
   return {
     GraphQL: {
       endpoint: o,
-      defaultAuthMode: tt(n),
+      defaultAuthMode: nt(n),
       region: e,
       apiKey: i,
       modelIntrospection: s
@@ -592,7 +592,7 @@ function dn(t) {
   return {
     Events: {
       endpoint: e,
-      defaultAuthMode: tt(i),
+      defaultAuthMode: nt(i),
       region: n,
       apiKey: o
     }
@@ -632,17 +632,17 @@ const hn = {
   AWS_LAMBDA: "lambda",
   OPENID_CONNECT: "oidc"
 };
-function tt(t) {
+function nt(t) {
   return hn[t];
 }
-const Ae = {
+const ke = {
   GOOGLE: "Google",
   LOGIN_WITH_AMAZON: "Amazon",
   FACEBOOK: "Facebook",
   SIGN_IN_WITH_APPLE: "Apple"
 };
 function gn(t = []) {
-  return t.reduce((e, n) => (Ae[n] !== void 0 && e.push(Ae[n]), e), []);
+  return t.reduce((e, n) => (ke[n] !== void 0 && e.push(ke[n]), e), []);
 }
 function fn(t) {
   return t === "OPTIONAL" ? "optional" : t === "REQUIRED" ? "on" : "off";
@@ -660,7 +660,7 @@ function pn(t) {
     };
   }), e;
 }
-const nt = (t) => Object.keys(t).some((e) => e.startsWith("aws_")) ? Ht(t) : nn(t) ? ln(t) : t, yn = (t) => new TextEncoder().encode(t);
+const ot = (t) => Object.keys(t).some((e) => e.startsWith("aws_")) ? Ht(t) : nn(t) ? ln(t) : t, yn = (t) => new TextEncoder().encode(t);
 typeof Buffer < "u" && Buffer.from;
 for (let t = 0; t < 256; t++) {
   let e = t.toString(16).toLowerCase();
@@ -670,107 +670,107 @@ var g;
 (function(t) {
   t.WebUnknown = "0", t.React = "1", t.NextJs = "2", t.Angular = "3", t.VueJs = "4", t.Nuxt = "5", t.Svelte = "6", t.ServerSideUnknown = "100", t.ReactSSR = "101", t.NextJsSSR = "102", t.AngularSSR = "103", t.VueJsSSR = "104", t.NuxtSSR = "105", t.SvelteSSR = "106", t.ReactNative = "201", t.Expo = "202";
 })(g || (g = {}));
-var ke;
-(function(t) {
-  t.AI = "ai", t.API = "api", t.Auth = "auth", t.Analytics = "analytics", t.DataStore = "datastore", t.Geo = "geo", t.InAppMessaging = "inappmessaging", t.Interactions = "interactions", t.Predictions = "predictions", t.PubSub = "pubsub", t.PushNotification = "pushnotification", t.Storage = "storage";
-})(ke || (ke = {}));
 var Pe;
 (function(t) {
-  t.CreateConversation = "1", t.GetConversation = "2", t.ListConversations = "3", t.DeleteConversation = "4", t.SendMessage = "5", t.ListMessages = "6", t.OnMessage = "7", t.Generation = "8", t.UpdateConversation = "9";
+  t.AI = "ai", t.API = "api", t.Auth = "auth", t.Analytics = "analytics", t.DataStore = "datastore", t.Geo = "geo", t.InAppMessaging = "inappmessaging", t.Interactions = "interactions", t.Predictions = "predictions", t.PubSub = "pubsub", t.PushNotification = "pushnotification", t.Storage = "storage";
 })(Pe || (Pe = {}));
 var Re;
 (function(t) {
-  t.Record = "1", t.IdentifyUser = "2";
+  t.CreateConversation = "1", t.GetConversation = "2", t.ListConversations = "3", t.DeleteConversation = "4", t.SendMessage = "5", t.ListMessages = "6", t.OnMessage = "7", t.Generation = "8", t.UpdateConversation = "9";
 })(Re || (Re = {}));
 var be;
 (function(t) {
-  t.GraphQl = "1", t.Get = "2", t.Post = "3", t.Put = "4", t.Patch = "5", t.Del = "6", t.Head = "7";
+  t.Record = "1", t.IdentifyUser = "2";
 })(be || (be = {}));
 var Oe;
 (function(t) {
-  t.SignUp = "1", t.ConfirmSignUp = "2", t.ResendSignUpCode = "3", t.SignIn = "4", t.FetchMFAPreference = "6", t.UpdateMFAPreference = "7", t.SetUpTOTP = "10", t.VerifyTOTPSetup = "11", t.ConfirmSignIn = "12", t.DeleteUserAttributes = "15", t.DeleteUser = "16", t.UpdateUserAttributes = "17", t.FetchUserAttributes = "18", t.ConfirmUserAttribute = "22", t.SignOut = "26", t.UpdatePassword = "27", t.ResetPassword = "28", t.ConfirmResetPassword = "29", t.FederatedSignIn = "30", t.RememberDevice = "32", t.ForgetDevice = "33", t.FetchDevices = "34", t.SendUserAttributeVerificationCode = "35", t.SignInWithRedirect = "36", t.StartWebAuthnRegistration = "37", t.CompleteWebAuthnRegistration = "38", t.ListWebAuthnCredentials = "39", t.DeleteWebAuthnCredential = "40";
+  t.GraphQl = "1", t.Get = "2", t.Post = "3", t.Put = "4", t.Patch = "5", t.Del = "6", t.Head = "7";
 })(Oe || (Oe = {}));
+var De;
+(function(t) {
+  t.SignUp = "1", t.ConfirmSignUp = "2", t.ResendSignUpCode = "3", t.SignIn = "4", t.FetchMFAPreference = "6", t.UpdateMFAPreference = "7", t.SetUpTOTP = "10", t.VerifyTOTPSetup = "11", t.ConfirmSignIn = "12", t.DeleteUserAttributes = "15", t.DeleteUser = "16", t.UpdateUserAttributes = "17", t.FetchUserAttributes = "18", t.ConfirmUserAttribute = "22", t.SignOut = "26", t.UpdatePassword = "27", t.ResetPassword = "28", t.ConfirmResetPassword = "29", t.FederatedSignIn = "30", t.RememberDevice = "32", t.ForgetDevice = "33", t.FetchDevices = "34", t.SendUserAttributeVerificationCode = "35", t.SignInWithRedirect = "36", t.StartWebAuthnRegistration = "37", t.CompleteWebAuthnRegistration = "38", t.ListWebAuthnCredentials = "39", t.DeleteWebAuthnCredential = "40";
+})(De || (De = {}));
 var xe;
 (function(t) {
   t.Subscribe = "1", t.GraphQl = "2";
 })(xe || (xe = {}));
-var De;
-(function(t) {
-  t.SearchByText = "0", t.SearchByCoordinates = "1", t.SearchForSuggestions = "2", t.SearchByPlaceId = "3", t.SaveGeofences = "4", t.GetGeofence = "5", t.ListGeofences = "6", t.DeleteGeofences = "7";
-})(De || (De = {}));
 var Me;
 (function(t) {
-  t.SyncMessages = "1", t.IdentifyUser = "2", t.NotifyMessageInteraction = "3";
+  t.SearchByText = "0", t.SearchByCoordinates = "1", t.SearchForSuggestions = "2", t.SearchByPlaceId = "3", t.SaveGeofences = "4", t.GetGeofence = "5", t.ListGeofences = "6", t.DeleteGeofences = "7";
 })(Me || (Me = {}));
 var Ke;
 (function(t) {
-  t.None = "0";
+  t.SyncMessages = "1", t.IdentifyUser = "2", t.NotifyMessageInteraction = "3";
 })(Ke || (Ke = {}));
 var Ue;
 (function(t) {
-  t.Convert = "1", t.Identify = "2", t.Interpret = "3";
+  t.None = "0";
 })(Ue || (Ue = {}));
 var Ne;
 (function(t) {
-  t.Subscribe = "1";
+  t.Convert = "1", t.Identify = "2", t.Interpret = "3";
 })(Ne || (Ne = {}));
 var Le;
 (function(t) {
-  t.InitializePushNotifications = "1", t.IdentifyUser = "2";
+  t.Subscribe = "1";
 })(Le || (Le = {}));
 var Ve;
 (function(t) {
-  t.UploadData = "1", t.DownloadData = "2", t.List = "3", t.Copy = "4", t.Remove = "5", t.GetProperties = "6", t.GetUrl = "7", t.GetDataAccess = "8", t.ListCallerAccessGrants = "9";
+  t.InitializePushNotifications = "1", t.IdentifyUser = "2";
 })(Ve || (Ve = {}));
-const In = "6.15.8", z = () => typeof global < "u", O = () => typeof window < "u", ot = () => typeof document < "u", ce = () => typeof process < "u", N = (t, e) => !!Object.keys(t).find((n) => n.startsWith(e));
+var Ge;
+(function(t) {
+  t.UploadData = "1", t.DownloadData = "2", t.List = "3", t.Copy = "4", t.Remove = "5", t.GetProperties = "6", t.GetUrl = "7", t.GetDataAccess = "8", t.ListCallerAccessGrants = "9";
+})(Ge || (Ge = {}));
+const In = "6.15.8", H = () => typeof global < "u", D = () => typeof window < "u", it = () => typeof document < "u", de = () => typeof process < "u", L = (t, e) => !!Object.keys(t).find((n) => n.startsWith(e));
 function mn() {
   const t = (o) => o.startsWith("_react") || o.startsWith("__react"), e = (o) => Object.keys(o).find(t), n = () => Array.from(document.querySelectorAll("[id]"));
-  return ot() && n().some(e);
+  return it() && n().some(e);
 }
 function Sn() {
-  return ce() && typeof process.env < "u" && !!Object.keys(process.env).find((t) => t.includes("react"));
+  return de() && typeof process.env < "u" && !!Object.keys(process.env).find((t) => t.includes("react"));
 }
 function wn() {
-  return O() && N(window, "__VUE");
+  return D() && L(window, "__VUE");
 }
 function _n() {
-  return z() && N(global, "__VUE");
+  return H() && L(global, "__VUE");
 }
 function En() {
-  return O() && N(window, "__SVELTE");
+  return D() && L(window, "__SVELTE");
 }
 function Cn() {
-  return ce() && typeof process.env < "u" && !!Object.keys(process.env).find((t) => t.includes("svelte"));
+  return de() && typeof process.env < "u" && !!Object.keys(process.env).find((t) => t.includes("svelte"));
 }
 function vn() {
-  return O() && window.next && typeof window.next == "object";
+  return D() && window.next && typeof window.next == "object";
 }
 function Tn() {
-  return z() && (N(global, "__next") || N(global, "__NEXT"));
+  return H() && (L(global, "__next") || L(global, "__NEXT"));
 }
 function An() {
-  return O() && (window.__NUXT__ !== void 0 || window.$nuxt !== void 0);
+  return D() && (window.__NUXT__ !== void 0 || window.$nuxt !== void 0);
 }
 function kn() {
-  return z() && typeof global.__NUXT_PATHS__ < "u";
+  return H() && typeof global.__NUXT_PATHS__ < "u";
 }
 function Pn() {
-  const t = !!(ot() && document.querySelector("[ng-version]")), e = !!(O() && typeof window.ng < "u");
+  const t = !!(it() && document.querySelector("[ng-version]")), e = !!(D() && typeof window.ng < "u");
   return t || e;
 }
 function Rn() {
-  return ce() && typeof process.env == "object" && process.env.npm_lifecycle_script?.startsWith("ng ") || !1;
+  return de() && typeof process.env == "object" && process.env.npm_lifecycle_script?.startsWith("ng ") || !1;
 }
 function bn() {
   return typeof navigator < "u" && typeof navigator.product < "u" && navigator.product === "ReactNative";
 }
 function On() {
-  return z() && typeof global.expo < "u";
+  return H() && typeof global.expo < "u";
 }
-function xn() {
-  return O();
+function Dn() {
+  return D();
 }
-const Dn = [
+const xn = [
   // First, detect mobile
   { platform: g.Expo, detectionMethod: On },
   { platform: g.ReactNative, detectionMethod: bn },
@@ -781,7 +781,7 @@ const Dn = [
   { platform: g.React, detectionMethod: mn },
   { platform: g.VueJs, detectionMethod: wn },
   { platform: g.Svelte, detectionMethod: En },
-  { platform: g.WebUnknown, detectionMethod: xn },
+  { platform: g.WebUnknown, detectionMethod: Dn },
   // Last, detect ssr frameworks
   { platform: g.NextJsSSR, detectionMethod: Tn },
   { platform: g.NuxtSSR, detectionMethod: kn },
@@ -791,45 +791,45 @@ const Dn = [
   { platform: g.SvelteSSR, detectionMethod: Cn }
 ];
 function Mn() {
-  return Dn.find((t) => t.detectionMethod())?.platform || g.ServerSideUnknown;
+  return xn.find((t) => t.detectionMethod())?.platform || g.ServerSideUnknown;
 }
-let K;
-const te = [];
-let ie = !1;
-const Kn = 10, Un = 10, Nn = 1e3, it = () => {
-  if (!K) {
-    if (K = Mn(), ie)
-      for (; te.length; )
-        te.pop()?.();
+let U;
+const ne = [];
+let se = !1;
+const Kn = 10, Un = 10, Nn = 1e3, st = () => {
+  if (!U) {
+    if (U = Mn(), se)
+      for (; ne.length; )
+        ne.pop()?.();
     else
-      te.forEach((t) => {
+      ne.forEach((t) => {
         t();
       });
-    We(g.ServerSideUnknown, Kn), We(g.WebUnknown, Un);
+    $e(g.ServerSideUnknown, Kn), $e(g.WebUnknown, Un);
   }
-  return K;
+  return U;
 };
 function Ln() {
-  K = void 0;
+  U = void 0;
 }
-function We(t, e) {
-  K === t && !ie && setTimeout(() => {
-    Ln(), ie = !0, setTimeout(it, Nn);
+function $e(t, e) {
+  U === t && !se && setTimeout(() => {
+    Ln(), se = !0, setTimeout(st, Nn);
   }, e);
 }
-const Vn = {}, Wn = (t, e) => Vn[t]?.[e]?.additionalDetails, $n = "aws-amplify", Gn = (t) => t.replace(/\+.*/, ""), Fn = ({ category: t, action: e } = {}) => {
+const Vn = {}, Gn = (t, e) => Vn[t]?.[e]?.additionalDetails, $n = "aws-amplify", Wn = (t) => t.replace(/\+.*/, ""), Fn = ({ category: t, action: e } = {}) => {
   const n = [
-    [$n, Gn(In)]
+    [$n, Wn(In)]
   ];
-  if (t && n.push([t, e]), n.push(["framework", it()]), t && e) {
-    const o = Wn(t, e);
+  if (t && n.push([t, e]), n.push(["framework", st()]), t && e) {
+    const o = Gn(t, e);
     o && o.forEach((i) => {
       n.push(i);
     });
   }
   return n;
-}, de = (t) => Fn(t).map(([o, i]) => o && i ? `${o}/${i}` : o).join(" "), jn = () => typeof window < "u" && typeof window.document < "u", $e = new w("Auth");
-class Bn {
+}, ue = (t) => Fn(t).map(([o, i]) => o && i ? `${o}/${i}` : o).join(" "), Bn = () => typeof window < "u" && typeof window.document < "u", We = new w("Auth");
+class jn {
   /**
    * Configure Auth category
    *
@@ -841,7 +841,7 @@ class Bn {
    * @returns void
    */
   configure(e, n) {
-    this.authConfig = e, this.authOptions = n, e && e.Cognito?.userPoolEndpoint && $e.warn(Ge("Amazon Cognito User Pool")), e && e.Cognito?.identityPoolEndpoint && $e.warn(Ge("Amazon Cognito Identity Pool"));
+    this.authConfig = e, this.authOptions = n, e && e.Cognito?.userPoolEndpoint && We.warn(Fe("Amazon Cognito User Pool")), e && e.Cognito?.identityPoolEndpoint && We.warn(Fe("Amazon Cognito Identity Pool"));
   }
   /**
    * Fetch the auth tokens, and the temporary AWS credentials and identity if they are configured. By default it
@@ -878,10 +878,10 @@ class Bn {
     return await this.authOptions?.tokenProvider?.getTokens(e) ?? void 0;
   }
 }
-const Ge = (t) => `You are using a custom Amazon ${t} endpoint, ensure the endpoint is correct.`;
+const Fe = (t) => `You are using a custom Amazon ${t} endpoint, ensure the endpoint is correct.`;
 class zn {
   constructor() {
-    this.oAuthListener = void 0, this.isConfigured = !1, this.resourcesConfig = {}, this.libraryOptions = {}, this.Auth = new Bn();
+    this.oAuthListener = void 0, this.isConfigured = !1, this.resourcesConfig = {}, this.libraryOptions = {}, this.Auth = new jn();
   }
   /**
    * Configures Amplify for use with your back-end resources.
@@ -897,8 +897,8 @@ class zn {
    * @param libraryOptions - Additional options for customizing the behavior of the library.
    */
   configure(e, n) {
-    const o = nt(e);
-    this.resourcesConfig = o, n && (this.libraryOptions = n), this.resourcesConfig = et(this.resourcesConfig), this.Auth.configure(this.resourcesConfig.Auth, this.libraryOptions.Auth), oe.dispatch("core", {
+    const o = ot(e);
+    this.resourcesConfig = o, n && (this.libraryOptions = n), this.resourcesConfig = tt(this.resourcesConfig), this.Auth.configure(this.resourcesConfig.Auth, this.libraryOptions.Auth), ie.dispatch("core", {
       event: "configure",
       data: this.resourcesConfig
     }, "Configure", j), this.notifyOAuthListener(), this.isConfigured = !0;
@@ -919,7 +919,7 @@ class zn {
     !this.resourcesConfig.Auth?.Cognito.loginWith?.oauth || !this.oAuthListener || (this.oAuthListener(this.resourcesConfig.Auth?.Cognito), this.oAuthListener = void 0);
   }
 }
-const k = new zn(), H = (t) => {
+const k = new zn(), q = (t) => {
   const { headers: e, statusCode: n } = t;
   return {
     ...Hn(t) ? t.$metadata : {},
@@ -928,25 +928,25 @@ const k = new zn(), H = (t) => {
     extendedRequestId: e["x-amz-id-2"],
     cfId: e["x-amz-cf-id"]
   };
-}, Hn = (t) => typeof t?.$metadata == "object", V = async (t) => {
+}, Hn = (t) => typeof t?.$metadata == "object", G = async (t) => {
   if (!t || t.statusCode < 300)
     return;
-  const e = await q(t), o = ((r) => {
+  const e = await J(t), o = ((r) => {
     const [a] = r.toString().split(/[,:]+/);
     return a.includes("#") ? a.split("#")[1] : a;
   })(t.headers["x-amzn-errortype"] ?? e.code ?? e.__type ?? "UnknownError"), i = e.message ?? e.Message ?? "Unknown error", s = new Error(i);
   return Object.assign(s, {
     name: o,
-    $metadata: H(t)
+    $metadata: q(t)
   });
-}, q = async (t) => {
+}, J = async (t) => {
   if (!t.body)
     throw new Error("Missing response payload");
   const e = await t.body.json();
   return Object.assign(e, {
-    $metadata: H(t)
+    $metadata: q(t)
   });
-}, ue = (t, e, n, o) => async (i, s) => {
+}, le = (t, e, n, o) => async (i, s) => {
   const r = {
     ...o,
     ...i
@@ -961,7 +961,7 @@ function Jn(t = qn) {
     return i > t ? !1 : i;
   };
 }
-const st = 3, Fe = "amz-sdk-invocation-id", Yn = "amz-sdk-request", je = 300 * 1e3, rt = (t) => {
+const rt = 3, Be = "amz-sdk-invocation-id", Yn = "amz-sdk-request", je = 300 * 1e3, at = (t) => {
   const n = Jn(je)(t);
   return n === !1 ? je : n;
 }, Qn = [
@@ -973,7 +973,7 @@ const st = 3, Fe = "amz-sdk-invocation-id", Yn = "amz-sdk-request", je = 300 * 1
   "SignatureDoesNotMatch",
   "BadRequestException"
   // API Gateway
-], Xn = (t) => !!t && Qn.includes(t), at = (t) => async (e, n) => {
+], Xn = (t) => !!t && Qn.includes(t), ct = (t) => async (e, n) => {
   const o = n ?? await t(e) ?? void 0, i = o?.code || o?.name, s = e?.statusCode;
   return {
     retryable: no(n) || to(s, i) || Xn(i) || oo(s, i)
@@ -997,23 +997,23 @@ const st = 3, Fe = "amz-sdk-invocation-id", Yn = "amz-sdk-request", je = 300 * 1
   "RequestTimeout",
   "RequestTimeoutException"
 ], to = (t, e) => t === 429 || !!e && Zn.includes(e), no = (t) => [
-  b.NetworkError,
+  O.NetworkError,
   // TODO(vNext): unify the error code `ERR_NETWORK` used by the Storage XHR handler
   "ERR_NETWORK"
-].includes(t?.name), oo = (t, e) => !!t && [500, 502, 503, 504].includes(t) || !!e && eo.includes(e), ct = "cognito-identity", dt = {
-  service: ct,
-  retryDecider: at(V),
-  computeDelay: rt,
+].includes(t?.name), oo = (t, e) => !!t && [500, 502, 503, 504].includes(t) || !!e && eo.includes(e), dt = "cognito-identity", ut = {
+  service: dt,
+  retryDecider: ct(G),
+  computeDelay: at,
   cache: "no-store"
-}, io = ({ maxAttempts: t = st, retryDecider: e, computeDelay: n, abortSignal: o }) => {
+}, io = ({ maxAttempts: t = rt, retryDecider: e, computeDelay: n, abortSignal: o }) => {
   if (t < 1)
     throw new Error("maxAttempts must be greater than 0");
   return (i, s) => async function(a) {
     let c, d = s.attemptsCount ?? 0, u;
     const I = () => {
       if (u)
-        return Be(u, d), u;
-      throw Be(c, d), c;
+        return ze(u, d), u;
+      throw ze(c, d), c;
     };
     for (; !o?.aborted && d < t; ) {
       try {
@@ -1046,14 +1046,14 @@ const st = 3, Fe = "amz-sdk-invocation-id", Yn = "amz-sdk-request", je = 300 * 1
   return e?.addEventListener("abort", function s(r) {
     clearTimeout(n), e?.removeEventListener("abort", s), o();
   }), i;
-}, Be = (t, e) => {
+}, ze = (t, e) => {
   Object.prototype.toString.call(t) === "[object Object]" && (t.$metadata = {
     ...t.$metadata ?? {},
     attempts: e
   });
 }, ro = tn, ao = () => (t) => async function(n) {
-  return n.headers[Fe] || (n.headers[Fe] = ro()), t(n);
-}, co = ({ maxAttempts: t = st }) => (e, n) => async function(i) {
+  return n.headers[Be] || (n.headers[Be] = ro()), t(n);
+}, co = ({ maxAttempts: t = rt }) => (e, n) => async function(i) {
   const s = n.attemptsCount ?? 0;
   return i.headers[Yn] = `attempt=${s + 1}; max=${t}`, e(i);
 }, uo = ({ userAgentHeader: t = "x-amz-user-agent", userAgentValue: e = "" }) => (n) => async function(i) {
@@ -1063,7 +1063,7 @@ const st = 3, Fe = "amz-sdk-invocation-id", Yn = "amz-sdk-request", je = 300 * 1
     const s = t.toLowerCase();
     return i.headers[s] = i.headers[s] ? `${i.headers[s]} ${e}` : e, await n(i);
   }
-}, le = (t, e) => (n, o) => {
+}, he = (t, e) => (n, o) => {
   const i = {};
   let s = (r) => t(r, o);
   for (let r = e.length - 1; r >= 0; r--) {
@@ -1071,7 +1071,7 @@ const st = 3, Fe = "amz-sdk-invocation-id", Yn = "amz-sdk-request", je = 300 * 1
     s = a(o)(s, i);
   }
   return s(n);
-}, ne = (t) => {
+}, oe = (t) => {
   let e;
   return () => (e || (e = t()), e);
 }, lo = (t) => !["HEAD", "GET"].includes(t.toUpperCase()), ho = async ({ url: t, method: e, headers: n, body: o }, { abortSignal: i, cache: s, withCrossDomainCredentials: r }) => {
@@ -1087,7 +1087,7 @@ const st = 3, Fe = "amz-sdk-invocation-id", Yn = "amz-sdk-request", je = 300 * 1
     });
   } catch (I) {
     throw I instanceof TypeError ? new C({
-      name: b.NetworkError,
+      name: O.NetworkError,
       message: "A network error has occurred.",
       underlyingError: I
     }) : I;
@@ -1101,22 +1101,22 @@ const st = 3, Fe = "amz-sdk-invocation-id", Yn = "amz-sdk-request", je = 300 * 1
     headers: c,
     body: null
   }, u = Object.assign(a.body ?? {}, {
-    text: ne(() => a.text()),
-    blob: ne(() => a.blob()),
-    json: ne(() => a.json())
+    text: oe(() => a.text()),
+    blob: oe(() => a.blob()),
+    json: oe(() => a.json())
   });
   return {
     ...d,
     body: u
   };
-}, ut = le(ho, [
+}, lt = he(ho, [
   uo,
   ao,
   io,
   co
 ]), go = () => (t) => async function(n) {
   return n.headers["cache-control"] = "no-store", t(n);
-}, lt = le(ut, [go]), ht = (t) => (e, n) => {
+}, ht = he(lt, [go]), gt = (t) => (e, n) => {
   const o = fo(t), i = JSON.stringify(e);
   return po(n, o, i);
 }, fo = (t) => ({
@@ -1127,34 +1127,34 @@ const st = 3, Fe = "amz-sdk-invocation-id", Yn = "amz-sdk-request", je = 300 * 1
   url: t,
   body: n,
   method: "POST"
-}), ze = (t) => ue(lt, ht("GetCredentialsForIdentity"), yo, {
-  ...dt,
+}), He = (t) => le(ht, gt("GetCredentialsForIdentity"), yo, {
+  ...ut,
   ...t,
-  userAgentValue: de()
+  userAgentValue: ue()
 }), yo = async (t) => {
   if (t.statusCode >= 300)
-    throw await V(t);
-  const e = await q(t);
+    throw await G(t);
+  const e = await J(t);
   return {
     IdentityId: e.IdentityId,
     Credentials: Io(e.Credentials),
-    $metadata: H(t)
+    $metadata: q(t)
   };
 }, Io = ({ Expiration: t, ...e } = {}) => ({
   ...e,
   Expiration: t && new Date(t * 1e3)
-}), mo = (t) => ue(lt, ht("GetId"), So, {
-  ...dt,
+}), mo = (t) => le(ht, gt("GetId"), So, {
+  ...ut,
   ...t,
-  userAgentValue: de()
+  userAgentValue: ue()
 }), So = async (t) => {
   if (t.statusCode >= 300)
-    throw await V(t);
+    throw await G(t);
   return {
-    IdentityId: (await q(t)).IdentityId,
-    $metadata: H(t)
+    IdentityId: (await J(t)).IdentityId,
+    $metadata: q(t)
   };
-}, gt = {
+}, ft = {
   id: "aws",
   outputs: {
     dnsSuffix: "amazonaws.com"
@@ -1163,7 +1163,7 @@ const st = 3, Fe = "amz-sdk-invocation-id", Yn = "amz-sdk-request", je = 300 * 1
   regions: ["aws-global"]
 }, wo = {
   partitions: [
-    gt,
+    ft,
     {
       id: "aws-cn",
       outputs: {
@@ -1173,26 +1173,26 @@ const st = 3, Fe = "amz-sdk-invocation-id", Yn = "amz-sdk-request", je = 300 * 1
       regions: ["aws-cn-global"]
     }
   ]
-}, ft = (t) => {
+}, pt = (t) => {
   const { partitions: e } = wo;
   for (const { regions: n, outputs: o, regionRegex: i } of e) {
     const s = new RegExp(i);
     if (n.includes(t) || s.test(t))
       return o.dnsSuffix;
   }
-  return gt.outputs.dnsSuffix;
-}, J = URL, _o = ({ region: t }) => ({
-  url: new J(`https://${ct}.${t}.${ft(t)}`)
+  return ft.outputs.dnsSuffix;
+}, Y = URL, _o = ({ region: t }) => ({
+  url: new Y(`https://${dt}.${t}.${pt(t)}`)
 });
-class D extends C {
+class M extends C {
   constructor() {
     super({
-      name: b.PlatformNotSupported,
+      name: O.PlatformNotSupported,
       message: "Function not supported on current platform"
     });
   }
 }
-class pt {
+class yt {
   constructor(e) {
     this.storage = e;
   }
@@ -1204,7 +1204,7 @@ class pt {
    */
   async setItem(e, n) {
     if (!this.storage)
-      throw new D();
+      throw new M();
     this.storage.setItem(e, n);
   }
   /**
@@ -1215,7 +1215,7 @@ class pt {
    */
   async getItem(e) {
     if (!this.storage)
-      throw new D();
+      throw new M();
     return this.storage.getItem(e);
   }
   /**
@@ -1225,7 +1225,7 @@ class pt {
    */
   async removeItem(e) {
     if (!this.storage)
-      throw new D();
+      throw new M();
     this.storage.removeItem(e);
   }
   /**
@@ -1234,11 +1234,11 @@ class pt {
    */
   async clear() {
     if (!this.storage)
-      throw new D();
+      throw new M();
     this.storage.clear();
   }
 }
-class yt {
+class It {
   constructor() {
     this.storage = /* @__PURE__ */ new Map();
   }
@@ -1261,31 +1261,31 @@ class yt {
     this.storage.clear();
   }
 }
-const It = new w("CoreStorageUtils"), Eo = () => {
+const mt = new w("CoreStorageUtils"), Eo = () => {
   try {
     if (typeof window < "u" && window.localStorage)
       return window.localStorage;
   } catch {
-    It.info("localStorage not found. InMemoryStorage is used as a fallback.");
+    mt.info("localStorage not found. InMemoryStorage is used as a fallback.");
   }
-  return new yt();
-}, mt = () => {
+  return new It();
+}, St = () => {
   try {
     if (typeof window < "u" && window.sessionStorage)
       return window.sessionStorage.getItem("test"), window.sessionStorage;
     throw new Error("sessionStorage is not defined");
   } catch {
-    return It.info("sessionStorage not found. InMemoryStorage is used as a fallback."), new yt();
+    return mt.info("sessionStorage not found. InMemoryStorage is used as a fallback."), new It();
   }
 };
-class Co extends pt {
+class Co extends yt {
   constructor() {
     super(Eo());
   }
 }
-class vo extends pt {
+class vo extends yt {
   constructor() {
-    super(mt());
+    super(St());
   }
 }
 class To {
@@ -1294,7 +1294,7 @@ class To {
   }
   get storage() {
     if (!this._storage)
-      throw new D();
+      throw new M();
     return this._storage;
   }
   /**
@@ -1333,10 +1333,10 @@ class To {
 }
 class Ao extends To {
   constructor() {
-    super(mt());
+    super(St());
   }
 }
-function W(t) {
+function $(t) {
   for (var e = 1; e < arguments.length; e++) {
     var n = arguments[e];
     for (var o in n)
@@ -1355,10 +1355,10 @@ var ko = {
     );
   }
 };
-function se(t, e) {
+function re(t, e) {
   function n(i, s, r) {
     if (!(typeof document > "u")) {
-      r = W({}, e, r), typeof r.expires == "number" && (r.expires = new Date(Date.now() + r.expires * 864e5)), r.expires && (r.expires = r.expires.toUTCString()), i = encodeURIComponent(i).replace(/%(2[346B]|5E|60|7C)/g, decodeURIComponent).replace(/[()]/g, escape);
+      r = $({}, e, r), typeof r.expires == "number" && (r.expires = new Date(Date.now() + r.expires * 864e5)), r.expires && (r.expires = r.expires.toUTCString()), i = encodeURIComponent(i).replace(/%(2[346B]|5E|60|7C)/g, decodeURIComponent).replace(/[()]/g, escape);
       var a = "";
       for (var c in r)
         r[c] && (a += "; " + c, r[c] !== !0 && (a += "=" + r[c].split(";")[0]));
@@ -1387,16 +1387,16 @@ function se(t, e) {
         n(
           i,
           "",
-          W({}, s, {
+          $({}, s, {
             expires: -1
           })
         );
       },
       withAttributes: function(i) {
-        return se(this.converter, W({}, this.attributes, i));
+        return re(this.converter, $({}, this.attributes, i));
       },
       withConverter: function(i) {
-        return se(W({}, this.converter, i), this.attributes);
+        return re($({}, this.converter, i), this.attributes);
       }
     },
     {
@@ -1405,7 +1405,7 @@ function se(t, e) {
     }
   );
 }
-var $ = se(ko, { path: "/" });
+var W = re(ko, { path: "/" });
 class Po {
   constructor(e = {}) {
     const { path: n, domain: o, expires: i, sameSite: s, secure: r } = e;
@@ -1418,16 +1418,16 @@ class Po {
     }
   }
   async setItem(e, n) {
-    $.set(e, n, this.getData());
+    W.set(e, n, this.getData());
   }
   async getItem(e) {
-    return $.get(e) ?? null;
+    return W.get(e) ?? null;
   }
   async removeItem(e) {
-    $.remove(e, this.getData());
+    W.remove(e, this.getData());
   }
   async clear() {
-    const e = $.get(), n = Object.keys(e).map((o) => this.removeItem(o));
+    const e = W.get(), n = Object.keys(e).map((o) => this.removeItem(o));
     await Promise.all(n);
   }
   getData() {
@@ -1440,7 +1440,7 @@ class Po {
     };
   }
 }
-const Y = new Co();
+const Q = new Co();
 new vo();
 new Ao();
 const Ro = (t) => {
@@ -1455,7 +1455,7 @@ const Ro = (t) => {
     });
   }), e);
 };
-function He({ expiresAt: t, clockDrift: e, tolerance: n = 5e3 }) {
+function qe({ expiresAt: t, clockDrift: e, tolerance: n = 5e3 }) {
   return Date.now() + e + n > t;
 }
 class l extends C {
@@ -1472,7 +1472,7 @@ function bo(t) {
     });
   return e;
 }
-function re(t) {
+function ae(t) {
   if (!t || !t.includes(":"))
     throw new l({
       name: "InvalidIdentityPoolIdException",
@@ -1481,19 +1481,19 @@ function re(t) {
     });
   return t.split(":")[0];
 }
-const St = "UserUnAuthenticatedException", Oo = "InvalidRedirectException", xo = "InvalidAppSchemeException", Do = "InvalidPreferredRedirectUrlException";
+const wt = "UserUnAuthenticatedException", Oo = "InvalidRedirectException", Do = "InvalidAppSchemeException", xo = "InvalidPreferredRedirectUrlException";
 new l({
   name: Oo,
   message: "signInRedirect or signOutRedirect had an invalid format or was not found.",
   recoverySuggestion: "Please make sure the signIn/Out redirect in your oauth config is valid."
 });
 new l({
-  name: xo,
+  name: Do,
   message: "A valid non-http app scheme was not found in the config.",
   recoverySuggestion: "Please make sure a valid custom app scheme is present in the config."
 });
 new l({
-  name: Do,
+  name: xo,
   message: "The given preferredRedirectUrl does not match any items in the redirectSignOutUrls array from the config.",
   recoverySuggestion: "Please make sure a matching preferredRedirectUrl is provided."
 });
@@ -1507,7 +1507,7 @@ const Ko = "TokenRefreshException";
 function Uo(t) {
   if (!t || !t.idToken)
     throw new l({
-      name: St,
+      name: wt,
       message: "User needs to be authenticated to call this API.",
       recoverySuggestion: "Sign in before calling this API again."
     });
@@ -1519,74 +1519,74 @@ const No = new l({
   recoverySuggestion: `Please logout and change your Amplify configuration to use "code grant" flow. 
 	E.g { responseType: 'code' }`
 }), Lo = new l({
-  name: St,
+  name: wt,
   message: "User needs to be authenticated to call this API.",
   recoverySuggestion: "Sign in before calling this API again."
 });
 function Vo(t) {
-  if (Go(t))
+  if (Wo(t))
     throw No;
   if (!$o(t))
     throw Lo;
 }
-const Wo = {
+const Go = {
   inflightOAuth: "inflightOAuth",
   oauthSignIn: "oauthSignIn",
   oauthPKCE: "oauthPKCE",
   oauthState: "oauthState"
 };
-function wt(t) {
+function _t(t) {
   return t?.accessToken || t?.idToken;
 }
 function $o(t) {
-  return wt(t) && t?.refreshToken;
+  return _t(t) && t?.refreshToken;
 }
-function Go(t) {
-  return wt(t) && !t?.refreshToken;
+function Wo(t) {
+  return _t(t) && !t?.refreshToken;
 }
 const Fo = (t) => (e, n) => {
-  const o = jo(t), i = JSON.stringify(e);
-  return Bo(n, o, i);
-}, jo = (t) => ({
+  const o = Bo(t), i = JSON.stringify(e);
+  return jo(n, o, i);
+}, Bo = (t) => ({
   "content-type": "application/x-amz-json-1.1",
   "x-amz-target": `AWSCognitoIdentityProviderService.${t}`
-}), Bo = ({ url: t }, e, n) => ({
+}), jo = ({ url: t }, e, n) => ({
   headers: e,
   url: t,
   body: n,
   method: "POST"
 });
-function L(t) {
+function V(t) {
   if (!t || t.name === "Error" || t instanceof TypeError)
     throw new l({
-      name: b.Unknown,
+      name: O.Unknown,
       message: "An unknown error has occurred.",
       underlyingError: t
     });
 }
 const zo = () => async (t) => {
   if (t.statusCode >= 300) {
-    const e = await V(t);
-    throw L(e), new l({
+    const e = await G(t);
+    throw V(e), new l({
       name: e.name,
       message: e.message,
       metadata: e.$metadata
     });
   }
-  return q(t);
+  return J(t);
 }, Ho = () => (t, e) => async function(o) {
   return o.headers["cache-control"] = "no-store", t(o);
-}, qo = le(ut, [Ho]), _t = "cognito-idp", Jo = {
-  service: _t,
-  retryDecider: at(V),
-  computeDelay: rt,
+}, qo = he(lt, [Ho]), Et = "cognito-idp", Jo = {
+  service: Et,
+  retryDecider: ct(G),
+  computeDelay: at,
   get userAgentValue() {
-    return de();
+    return ue();
   },
   cache: "no-store"
 }, Yo = ({ region: t }) => ({
-  url: new J(`https://${_t}.${t}.${ft(t)}`)
-}), Qo = ({ endpointOverride: t }) => (e) => t ? { url: new J(t) } : Yo(e), Xo = (t) => ue(qo, Fo("GetTokensFromRefreshToken"), zo(), {
+  url: new Y(`https://${Et}.${t}.${pt(t)}`)
+}), Qo = ({ endpointOverride: t }) => (e) => t ? { url: new Y(t) } : Yo(e), Xo = (t) => le(qo, Fo("GetTokensFromRefreshToken"), zo(), {
   ...Jo,
   ...t
 }), Zo = async ({ tokens: t, authConfig: e, username: n, clientMetadata: o }) => {
@@ -1602,7 +1602,7 @@ const zo = () => async (t) => {
     RefreshToken: t.refreshToken,
     DeviceKey: t.deviceMetadata?.deviceKey,
     ClientMetadata: o
-  }), u = U(d?.AccessToken ?? ""), I = d?.IdToken ? U(d.IdToken) : void 0, { iat: f } = u.payload;
+  }), u = N(d?.AccessToken ?? ""), I = d?.IdToken ? N(d.IdToken) : void 0, { iat: f } = u.payload;
   if (!f)
     throw new l({
       name: "iatNotFoundException",
@@ -1628,16 +1628,16 @@ const zo = () => async (t) => {
   signInDetails: "signInDetails",
   oauthMetadata: "oauthMetadata"
 };
-var B;
+var z;
 (function(t) {
   t.InvalidAuthTokens = "InvalidAuthTokens";
-})(B || (B = {}));
+})(z || (z = {}));
 const ni = {
-  [B.InvalidAuthTokens]: {
+  [z.InvalidAuthTokens]: {
     message: "Invalid tokens.",
     recoverySuggestion: "Make sure the tokens are valid."
   }
-}, oi = Xe(ni), qe = "CognitoIdentityServiceProvider";
+}, oi = Ze(ni), Je = "CognitoIdentityServiceProvider";
 class ii {
   getKeyValueStorage() {
     if (!this.keyValueStorage)
@@ -1661,7 +1661,7 @@ class ii {
           name: "NoSessionFoundException",
           message: "Auth session was not found. Make sure to call signIn."
         });
-      const o = U(n), i = await this.getKeyValueStorage().getItem(e.idToken), s = i ? U(i) : void 0, r = await this.getKeyValueStorage().getItem(e.refreshToken) ?? void 0, a = await this.getKeyValueStorage().getItem(e.clockDrift) ?? "0", c = Number.parseInt(a), d = await this.getKeyValueStorage().getItem(e.signInDetails), u = {
+      const o = N(n), i = await this.getKeyValueStorage().getItem(e.idToken), s = i ? N(i) : void 0, r = await this.getKeyValueStorage().getItem(e.refreshToken) ?? void 0, a = await this.getKeyValueStorage().getItem(e.clockDrift) ?? "0", c = Number.parseInt(a), d = await this.getKeyValueStorage().getItem(e.signInDetails), u = {
         accessToken: o,
         idToken: s,
         refreshToken: r,
@@ -1675,7 +1675,7 @@ class ii {
     }
   }
   async storeTokens(e) {
-    oi(e !== void 0, B.InvalidAuthTokens);
+    oi(e !== void 0, z.InvalidAuthTokens);
     const n = e.username;
     await this.getKeyValueStorage().setItem(this.getLastAuthUserKey(), n);
     const o = await this.getAuthKeys();
@@ -1712,12 +1712,12 @@ class ii {
   async getAuthKeys(e) {
     m(this.authConfig?.Cognito);
     const n = e ?? await this.getLastAuthUser();
-    return si(qe, `${this.authConfig.Cognito.userPoolClientId}.${n}`);
+    return si(Je, `${this.authConfig.Cognito.userPoolClientId}.${n}`);
   }
   getLastAuthUserKey() {
     m(this.authConfig?.Cognito);
     const e = this.authConfig.Cognito.userPoolClientId;
-    return `${qe}.${e}.LastAuthUser`;
+    return `${Je}.${e}.LastAuthUser`;
   }
   async getLastAuthUser() {
     return await this.getKeyValueStorage().getItem(this.getLastAuthUserKey()) ?? "username";
@@ -1731,15 +1731,15 @@ class ii {
     return n && JSON.parse(n);
   }
 }
-const si = (t, e) => he(ti)(`${t}`, e);
-function he(t) {
+const si = (t, e) => ge(ti)(`${t}`, e);
+function ge(t) {
   const e = Object.values({ ...t });
   return (n, o) => e.reduce((i, s) => ({
     ...i,
     [s]: `${n}.${o}.${s}`
   }), {});
 }
-const Je = "amplify-signin-with-hostedUI", _ = "CognitoIdentityServiceProvider";
+const Ye = "amplify-signin-with-hostedUI", _ = "CognitoIdentityServiceProvider";
 class ri {
   constructor(e) {
     this.keyValueStorage = e;
@@ -1756,7 +1756,7 @@ class ri {
   async clearOAuthData() {
     m(this.cognitoConfig);
     const e = E(_, this.cognitoConfig.userPoolClientId);
-    return await this.clearOAuthInflightData(), await this.keyValueStorage.removeItem(Je), this.keyValueStorage.removeItem(e.oauthSignIn);
+    return await this.clearOAuthInflightData(), await this.keyValueStorage.removeItem(Ye), this.keyValueStorage.removeItem(e.oauthSignIn);
   }
   loadOAuthState() {
     m(this.cognitoConfig);
@@ -1793,7 +1793,7 @@ class ri {
   }
   async loadOAuthSignIn() {
     m(this.cognitoConfig);
-    const e = E(_, this.cognitoConfig.userPoolClientId), n = await this.keyValueStorage.getItem(Je), [o, i] = (await this.keyValueStorage.getItem(e.oauthSignIn))?.split(",") ?? [];
+    const e = E(_, this.cognitoConfig.userPoolClientId), n = await this.keyValueStorage.getItem(Ye), [o, i] = (await this.keyValueStorage.getItem(e.oauthSignIn))?.split(",") ?? [];
     return {
       isOAuthSignIn: o === "true" || n === "true",
       preferPrivateSession: i === "true"
@@ -1805,18 +1805,18 @@ class ri {
     await this.keyValueStorage.setItem(o.oauthSignIn, `${e},${n}`);
   }
 }
-const E = (t, e) => he(Wo)(t, e), Ye = new ri(Y);
+const E = (t, e) => ge(Go)(t, e), Qe = new ri(Q);
 class ai {
   constructor() {
-    this.waitForInflightOAuth = jn() ? async () => {
-      if (await Ye.loadOAuthInFlight())
+    this.waitForInflightOAuth = Bn() ? async () => {
+      if (await Qe.loadOAuthInFlight())
         return this.inflightPromise ? this.inflightPromise : (this.inflightPromise = new Promise((e, n) => {
         }), this.inflightPromise);
     } : async () => {
     };
   }
   setAuthConfig(e) {
-    Ye.setAuthConfig(e.Cognito), this.authConfig = e;
+    Qe.setAuthConfig(e.Cognito), this.authConfig = e;
   }
   setTokenRefresher(e) {
     this.tokenRefresher = e;
@@ -1854,10 +1854,10 @@ class ai {
     const o = await this.getTokenStore().getLastAuthUser();
     if (n === null)
       return null;
-    const i = !!n?.idToken && He({
+    const i = !!n?.idToken && qe({
       expiresAt: (n.idToken?.payload?.exp ?? 0) * 1e3,
       clockDrift: n.clockDrift ?? 0
-    }), s = He({
+    }), s = qe({
       expiresAt: (n.accessToken?.payload?.exp ?? 0) * 1e3,
       clockDrift: n.clockDrift ?? 0
     });
@@ -1879,13 +1879,13 @@ class ai {
         username: n,
         clientMetadata: o
       });
-      return s.signInDetails = i, await this.setTokens({ tokens: s }), oe.dispatch("auth", { event: "tokenRefresh" }, "Auth", j), s;
+      return s.signInDetails = i, await this.setTokens({ tokens: s }), ie.dispatch("auth", { event: "tokenRefresh" }, "Auth", j), s;
     } catch (i) {
       return this.handleErrors(i);
     }
   }
   handleErrors(e) {
-    if (L(e), this.isAuthenticationError(e) && this.clearTokens(), oe.dispatch("auth", {
+    if (V(e), this.isAuthenticationError(e) && this.clearTokens(), ie.dispatch("auth", {
       event: "tokenRefresh_failure",
       data: { error: e }
     }, "Auth", j), e.name.startsWith("NotAuthorizedException"))
@@ -1929,7 +1929,7 @@ class ai {
 }
 class ci {
   constructor() {
-    this.authTokenStore = new ii(), this.authTokenStore.setKeyValueStorage(Y), this.tokenOrchestrator = new ai(), this.tokenOrchestrator.setAuthTokenStore(this.authTokenStore), this.tokenOrchestrator.setTokenRefresher(ei);
+    this.authTokenStore = new ii(), this.authTokenStore.setKeyValueStorage(Q), this.tokenOrchestrator = new ai(), this.tokenOrchestrator.setAuthTokenStore(this.authTokenStore), this.tokenOrchestrator.setTokenRefresher(ei);
   }
   getTokens(e = {}) {
     return this.tokenOrchestrator.getTokens(e);
@@ -1944,18 +1944,18 @@ class ci {
     this.authTokenStore.setAuthConfig(e), this.tokenOrchestrator.setAuthConfig(e);
   }
 }
-const M = new ci(), { tokenOrchestrator: Ei } = M, di = {
+const K = new ci(), { tokenOrchestrator: Ii } = K, di = {
   identityId: "identityId"
 }, ui = new w("DefaultIdentityIdStore");
-class Et {
+class Ct {
   setAuthConfig(e) {
-    F(e.Cognito), this.authConfig = e, this._authKeys = li("Cognito", e.Cognito.identityPoolId);
+    B(e.Cognito), this.authConfig = e, this._authKeys = li("Cognito", e.Cognito.identityPoolId);
   }
   constructor(e) {
     this._authKeys = {}, this._hasGuestIdentityId = !1, this.keyValueStorage = e;
   }
   async loadIdentityId() {
-    F(this.authConfig?.Cognito);
+    B(this.authConfig?.Cognito);
     try {
       if (this._primaryIdentityId)
         return {
@@ -1974,15 +1974,15 @@ class Et {
     }
   }
   async storeIdentityId(e) {
-    F(this.authConfig?.Cognito), e.type === "guest" ? (this.keyValueStorage.setItem(this._authKeys.identityId, e.id), this._primaryIdentityId = void 0, this._hasGuestIdentityId = !0) : (this._primaryIdentityId = e.id, this._hasGuestIdentityId && (this.keyValueStorage.removeItem(this._authKeys.identityId), this._hasGuestIdentityId = !1));
+    B(this.authConfig?.Cognito), e.type === "guest" ? (this.keyValueStorage.setItem(this._authKeys.identityId, e.id), this._primaryIdentityId = void 0, this._hasGuestIdentityId = !0) : (this._primaryIdentityId = e.id, this._hasGuestIdentityId && (this.keyValueStorage.removeItem(this._authKeys.identityId), this._hasGuestIdentityId = !1));
   }
   async clearIdentityId() {
     this._primaryIdentityId = void 0, await this.keyValueStorage.removeItem(this._authKeys.identityId);
   }
 }
-const li = (t, e) => he(di)(`com.amplify.${t}`, e), ae = ({ endpointOverride: t }) => (e) => t ? { url: new J(t) } : _o(e);
-function Ct(t) {
-  const e = U(t).payload.iss, n = {};
+const li = (t, e) => ge(di)(`com.amplify.${t}`, e), ce = ({ endpointOverride: t }) => (e) => t ? { url: new Y(t) } : _o(e);
+function vt(t) {
+  const e = N(t).payload.iss, n = {};
   if (!e)
     throw new l({
       name: "InvalidIdTokenException",
@@ -1996,15 +1996,15 @@ async function hi({ tokens: t, authConfig: e, identityIdStore: n }) {
   const o = await n.loadIdentityId();
   if (o)
     return o.id;
-  const i = t?.idToken ? Ct(t.idToken.toString()) : {}, s = await gi(i, e);
+  const i = t?.idToken ? vt(t.idToken.toString()) : {}, s = await gi(i, e);
   return n.storeIdentityId({
     id: s,
     type: t ? "primary" : "guest"
   }), s;
 }
 async function gi(t, e) {
-  const n = e?.identityPoolId, o = re(n), i = mo({
-    endpointResolver: ae({
+  const n = e?.identityPoolId, o = ae(n), i = mo({
+    endpointResolver: ce({
       endpointOverride: e.identityPoolEndpoint
     })
   });
@@ -2017,7 +2017,7 @@ async function gi(t, e) {
       Logins: t
     })).IdentityId;
   } catch (r) {
-    throw L(r), new l(r);
+    throw V(r), new l(r);
   }
   if (!s)
     throw new l({
@@ -2027,21 +2027,21 @@ async function gi(t, e) {
     });
   return s;
 }
-const G = new w("CognitoCredentialsProvider"), Qe = 3e3 * 1e3;
-class vt {
+const F = new w("CognitoCredentialsProvider"), Xe = 3e3 * 1e3;
+class Tt {
   constructor(e) {
     this._nextCredentialsRefresh = 0, this._identityIdStore = e;
   }
   async clearCredentialsAndIdentityId() {
-    G.debug("Clearing out credentials and identityId"), this._credentialsAndIdentityId = void 0, await this._identityIdStore.clearIdentityId();
+    F.debug("Clearing out credentials and identityId"), this._credentialsAndIdentityId = void 0, await this._identityIdStore.clearIdentityId();
   }
   async clearCredentials() {
-    G.debug("Clearing out in-memory credentials"), this._credentialsAndIdentityId = void 0;
+    F.debug("Clearing out in-memory credentials"), this._credentialsAndIdentityId = void 0;
   }
   async getCredentialsAndIdentityId(e) {
     const n = e.authenticated, { tokens: o } = e, { authConfig: i } = e;
     try {
-      F(i?.Cognito);
+      B(i?.Cognito);
     } catch {
       return;
     }
@@ -2056,10 +2056,10 @@ class vt {
   }
   async getGuestCredentials(e, n) {
     if (this._credentialsAndIdentityId && !this.isPastTTL() && this._credentialsAndIdentityId.isAuthenticatedCreds === !1)
-      return G.info("returning stored credentials as they neither past TTL nor expired."), this._credentialsAndIdentityId;
+      return F.info("returning stored credentials as they neither past TTL nor expired."), this._credentialsAndIdentityId;
     this.clearCredentials();
-    const o = re(n.identityPoolId), i = ze({
-      endpointResolver: ae({
+    const o = ae(n.identityPoolId), i = He({
+      endpointResolver: ce({
         endpointOverride: n.identityPoolEndpoint
       })
     });
@@ -2069,10 +2069,10 @@ class vt {
         IdentityId: e
       });
     } catch (r) {
-      throw L(r), new l(r);
+      throw V(r), new l(r);
     }
     if (s?.Credentials?.AccessKeyId && s?.Credentials?.SecretKey) {
-      this._nextCredentialsRefresh = (/* @__PURE__ */ new Date()).getTime() + Qe;
+      this._nextCredentialsRefresh = (/* @__PURE__ */ new Date()).getTime() + Xe;
       const r = {
         credentials: {
           accessKeyId: s.Credentials.AccessKeyId,
@@ -2097,10 +2097,10 @@ class vt {
   }
   async credsForOIDCTokens(e, n, o) {
     if (this._credentialsAndIdentityId && !this.isPastTTL() && this._credentialsAndIdentityId.isAuthenticatedCreds === !0)
-      return G.debug("returning stored credentials as they neither past TTL nor expired."), this._credentialsAndIdentityId;
+      return F.debug("returning stored credentials as they neither past TTL nor expired."), this._credentialsAndIdentityId;
     this.clearCredentials();
-    const i = n.idToken ? Ct(n.idToken.toString()) : {}, s = re(e.identityPoolId), r = ze({
-      endpointResolver: ae({
+    const i = n.idToken ? vt(n.idToken.toString()) : {}, s = ae(e.identityPoolId), r = He({
+      endpointResolver: ce({
         endpointOverride: e.identityPoolEndpoint
       })
     });
@@ -2111,10 +2111,10 @@ class vt {
         Logins: i
       });
     } catch (c) {
-      throw L(c), new l(c);
+      throw V(c), new l(c);
     }
     if (a?.Credentials?.AccessKeyId && a?.Credentials?.SecretKey) {
-      this._nextCredentialsRefresh = (/* @__PURE__ */ new Date()).getTime() + Qe;
+      this._nextCredentialsRefresh = (/* @__PURE__ */ new Date()).getTime() + Xe;
       const c = {
         credentials: {
           accessKeyId: a.Credentials.AccessKeyId,
@@ -2145,7 +2145,7 @@ class vt {
     return !!e && !!this._credentialsAndIdentityId?.associatedIdToken && e.idToken?.toString() !== this._credentialsAndIdentityId.associatedIdToken;
   }
 }
-const fi = new vt(new Et(Y)), pi = {
+const fi = new Tt(new Ct(Q)), pi = {
   /**
    * Configures Amplify with the {@link resourceConfig} and {@link libraryOptions}.
    *
@@ -2159,7 +2159,7 @@ const fi = new vt(new Et(Y)), pi = {
    * Amplify.configure(config);
    */
   configure(t, e) {
-    const n = nt(t), o = new Po({ sameSite: "lax" }), i = e?.ssr ? o : Y, s = e?.ssr ? new vt(new Et(o)) : fi;
+    const n = ot(t), o = new Po({ sameSite: "lax" }), i = e?.ssr ? o : Q, s = e?.ssr ? new Tt(new Ct(o)) : fi;
     if (!n.Auth) {
       k.configure(n, e);
       return;
@@ -2169,13 +2169,13 @@ const fi = new vt(new Et(Y)), pi = {
       return;
     }
     if (!k.libraryOptions.Auth) {
-      M.setAuthConfig(n.Auth), M.setKeyValueStorage(
+      K.setAuthConfig(n.Auth), K.setKeyValueStorage(
         // TODO: allow configure with a public interface
         i
       ), k.configure(n, {
         ...e,
         Auth: {
-          tokenProvider: M,
+          tokenProvider: K,
           credentialsProvider: s
         }
       });
@@ -2183,7 +2183,7 @@ const fi = new vt(new Et(Y)), pi = {
     }
     if (e) {
       const r = k.libraryOptions.Auth;
-      e.ssr !== void 0 && (M.setKeyValueStorage(
+      e.ssr !== void 0 && (K.setKeyValueStorage(
         // TODO: allow configure with a public interface
         i
       ), r.credentialsProvider = s), k.configure(n, {
@@ -2203,15 +2203,47 @@ const fi = new vt(new Et(Y)), pi = {
   getConfig() {
     return k.getConfig();
   }
-}, yi = "us-east-1", Ii = "us-east-1", mi = "us-east-1_oNyxRPCWZ", Si = "5j872gj7bfngab94seb711acic", wi = { Cognito: { userPoolId: "us-east-1_oNyxRPCWZ", userPoolClientId: "5j872gj7bfngab94seb711acic", region: "us-east-1" } }, Tt = {
-  aws_project_region: yi,
-  aws_cognito_region: Ii,
-  aws_user_pools_id: mi,
-  aws_user_pools_web_client_id: Si,
-  Auth: wi
 };
-pi.configure(Tt);
-console.log(Tt);
+class P {
+  //#region PRIVATE - VARIABLES
+  //#endregion
+  //#region PUBLIC - VARIABLES
+  //#endregion
+  //#region PUBLIC - CONSTRUCTOR
+  /**
+   * Initializes the CognitoApiManager singleton, preparing it for use
+   */
+  //------------------------------------------------//
+  constructor() {
+    if (P.instance)
+      return P.instance;
+    P.instance = this;
+  }
+  //END constructor() Method
+  //#endregion
+  //#region PUBLIC - GET INSTANCE
+  /**
+   * Get the single instance of the CognitoApiManager
+   * @returns {CognitoApiManager} The CognitoApiManager instance
+   */
+  // ----------------------------------------------------------------- //
+  static GetInstance() {
+    return P.instance || (P.instance = new P()), P.instance;
+  }
+  //END GetInstance() Method
+  //#endregion
+  //#region PUBLIC - CONFIGURE
+  /**
+   * Sets the Amplify configuration file
+   * @param {ResourcesConfig} config The 'amplifyconfiguration.json' config file
+   */
+  // ----------------------------------------------------------------- //
+  Configure(e) {
+    pi.configure(e), console.log(e);
+  }
+  //END Configure() Method
+  //#endregion
+}
 export {
-  pi as Amplify
+  P as CognitoApiManager
 };

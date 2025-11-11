@@ -1,21 +1,27 @@
-import { resolve } from 'path';
 import { defineConfig } from 'vite';
+import path from 'path';
+import fs from 'fs';
+
+const vendorDir = path.resolve(__dirname, 'vendor');
+const vendorPackages = fs.readdirSync(vendorDir);
+
+const alias = vendorPackages.reduce((acc, dir) => {
+  const packagePath = path.join(vendorDir, dir);
+  if (fs.statSync(packagePath).isDirectory()) {
+    const packageJsonPath = path.join(packagePath, 'package.json');
+    if (fs.existsSync(packageJsonPath)) {
+      const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+      // Resolve to the main export or module export if available
+      const entry = packageJson.module || packageJson.main || 'index.js';
+      acc[dir] = path.resolve(packagePath, entry);
+    }
+  }
+  return acc;
+}, {});
 
 export default defineConfig({
-  build: {
-    // The output directory for the build, equivalent to Webpack's `output.path`.
-    outDir: 'dist',
-    lib: 
-    {
-      // The entry point for the library build, equivalent to Webpack's `entry`.
-      // We use `src/index.js` from your package.json.
-      entry: resolve(__dirname, 'src/index.js'),
-
-      // Specify the output formats. Since you only want ESM, we set it to ['es'].
-      formats: ['es'],
-      
-      // The output filename for the bundle. We can simplify this as we only have one format.
-      fileName: 'web-aws-cognito-api',
-    },
+  resolve: {
+    alias,
   },
+  // Your other Vite config...
 });
