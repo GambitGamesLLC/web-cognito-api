@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cognito API Manager - Configure Example</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        pre { background-color: #f4f4f4; padding: 10px; border: 1px solid #ddd; white-space: pre-wrap; word-wrap: break-word; }
+    </style>
+</head>
+<body>
+    <h1>Cognito API Manager - Configure() Example</h1>
+    <p>This example demonstrates how to use the <code>Configure()</code> method of the <code>CognitoApiManager</code>.</p>
+    <p>
+        The script for this page fetches the <code>amplifyconfiguration.json</code> file from the parent <code>/examples</code> directory
+        to configure the Amplify library. Check the browser's console for detailed output. The final configuration object loaded into Amplify will be displayed below.
+    </p>
+
+    <hr>
+
+    <h2>About <code>amplifyconfiguration.json</code></h2>
+    <p>This JSON file contains the necessary AWS resource details for Amplify to connect to your backend services, like Amazon Cognito.</p>
+    <ul>
+        <li><code>userPoolId</code>: The ID of your Cognito User Pool. You can find this in the AWS Cognito console under "User Pools" > [Your Pool Name] > "Pool details".</li>
+        <br><li><code>userPoolClientId</code>: The ID of your App Client. Found in the AWS Cognito console under "User Pools" > [Your Pool Name] > "App integration" > "App clients and analytics".</li>
+        <br><li><code>region</code>: The AWS region where your Cognito User Pool is located (e.g., <code>us-east-1</code>). This can also be found in the "Pool details" section of your User Pool in the AWS Cognito console.</li>
+        <br><li><code>identityPoolId</code> (Optional): The ID of your Cognito Identity Pool (Federated Identities). This is needed if you plan to use AWS credentials for unauthenticated or authenticated users to access other AWS services. You can find this in the AWS Cognito console under "Identity Pools".</li>
+    </ul>
+    <p>
+        The structure of this file is important. The `web-cognito-api` library expects a format that the AWS Amplify library can understand, typically like this:
+        <pre>{
+  "Auth": {
+    "Cognito": {
+      "userPoolId": "...",
+      "userPoolClientId": "...",
+      "region": "..."
+    }
+  }
+}</pre>
+    </p>
+
+    <h2>Configuration Loaded:</h2>
+    <pre id="config-output">Loading configuration...</pre>
+
+    <script type="module" src="./index.js"></script>
+</body>
+</html>
