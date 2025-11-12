@@ -11,6 +11,10 @@ export default defineConfig({
   build: {
     // Generate a source map for easier debugging.
     sourcemap: true,
+    // Allow cleaning the output directory even if it's outside the project root.
+    emptyOutDir: true,
+    // The output directory for the build, relative to the project root.
+    outDir: path.resolve(__dirname, 'dist'),
     // Configure the library build.
     lib: {
       // The entry point for the library.

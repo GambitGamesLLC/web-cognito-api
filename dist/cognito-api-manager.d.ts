@@ -15,18 +15,24 @@ export class CognitoApiManager {
     static GetInstance(): CognitoApiManager;
     /**
      * Sets the Amplify configuration file
+     *
+     * @documentation https://docs.amplify.aws/javascript/start/connect-to-aws-resources/
+     *
      * @param {ResourcesConfig} config The 'amplifyconfiguration.json' config file
-     * @returns void
+     * @returns {Promise<ResourcesConfig>} The resources configuration set up with Amplify
      */
-    Configure(config: ResourcesConfig): void;
+    Configure(config: ResourcesConfig): Promise<ResourcesConfig>;
     /**
      * Creates a new user within the user pool
-     * @param {string} username The name for the new user
+     *
+     * @documentation https://docs.amplify.aws/javascript/build-a-backend/auth/connect-your-frontend/sign-up/
+     *
+     * @param {string} username The name for the new user. Specific format depends on the user pool settings in your AWS console.
      * @param {string} password The password for the new user
-     * @param {object} attributes An object of user attributes, e.g., { email: 'user@example.com' }
-     * @returns {Promise<SignUpOutput['nextStep']>} The 'nextStep' property returned by Amplify after a user is successfully created in the user pool
+     * @param {object | null} attributes [Optional] An object of user attributes, e.g., { email: 'user@example.com' }
+     * @returns {Promise<SignUpOutput>} The 'SignUpOutput' property returned by Amplify after a user is successfully created in the user pool
      */
-    CreateUser(username: string, password: string, attributes: object): Promise<SignUpOutput["nextStep"]>;
+    SignUp(username: string, password: string, attributes: object | null): Promise<SignUpOutput>;
 }
 export type ResourcesConfig = import("@aws-amplify/core").ResourcesConfig;
 export type AuthNextSignUpStep = import("@aws-amplify/auth/dist/esm/types").AuthNextSignUpStep;

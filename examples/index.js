@@ -132,7 +132,7 @@ async function CreateCognitoApi()
         /**
          * @type SignUpOutput
          */
-        let signUpOutput = await cognitoApiManager.CreateUser( "TestUser@gmail.com", "Test!@2025" );
+        let signUpOutput = await cognitoApiManager.SignUp( "TestUser@gmail.com", "Test!@2025" );
 
         console.log(signUpOutput);
     }

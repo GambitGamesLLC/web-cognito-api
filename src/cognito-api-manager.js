@@ -117,30 +117,30 @@ export class CognitoApiManager
 
     //#endregion
     
-    //#region PUBLIC - CREATE USER
+    //#region PUBLIC - SIGN UP
 
     /**
      * Creates a new user within the user pool
      * 
      * @documentation https://docs.amplify.aws/javascript/build-a-backend/auth/connect-your-frontend/sign-up/
      * 
-     * @param {string} username The name for the new user. May either be a 
+     * @param {string} username The name for the new user. Specific format depends on the user pool settings in your AWS console.
      * @param {string} password The password for the new user
      * @param {object | null} attributes [Optional] An object of user attributes, e.g., { email: 'user@example.com' }
      * @returns {Promise<SignUpOutput>} The 'SignUpOutput' property returned by Amplify after a user is successfully created in the user pool
      */
     // ----------------------------------------------------------------- //
-    async CreateUser( username, password, attributes ) 
+    async SignUp( username, password, attributes ) 
     // ----------------------------------------------------------------- //
     {
         if (!username) 
         {
-            return Promise.reject( new Error("cognito-api-manager.js CreateUser() Error: username cannot be null, undefined, or empty." ) );
+            return Promise.reject( new Error("cognito-api-manager.js SignUp() Error: username cannot be null, undefined, or empty." ) );
         }
 
         if (!password) 
         {
-            return Promise.reject( new Error("cognito-api-manager.js CreateUser() Error: password cannot be null, undefined, or empty." ) );
+            return Promise.reject( new Error("cognito-api-manager.js SignUp() Error: password cannot be null, undefined, or empty." ) );
         }
 
         if (attributes === undefined || attributes === null) 
@@ -160,21 +160,17 @@ export class CognitoApiManager
                 options: 
                 {
                     userAttributes: attributes,
-                    // autoSignIn: true // Optional: Signs in the user automatically after sign-up
                 }
             });
-
-            console.log(`cognito-api-manager.js CreateUser() Successfully signed up user ${signUpOutput.userId}`);
-            console.log('cognito-api-manager.js CreateUser() Next step:', signUpOutput.nextStep);
 
             return signUpOutput;
         }
         catch(error)
         {
-            return Promise.reject( new Error("cognito-api-manager.js CreateUser() Error: " + error ));
+            return Promise.reject( new Error("cognito-api-manager.js SignUp() Error: " + error ));
         }
         
-    } //END CreateUser() Method
+    } //END SignUp() Method
 
     //#endregion
 
