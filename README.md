@@ -122,8 +122,9 @@ When complete, this will also generate a coverage guide and place it in the `./c
 
 The core of this package is the `CognitoApiManager` class, a singleton that centralizes all interactions with the AWS Cognito API.
 
-After initialization, each Cognito function and endpoint is available under a separate public object. 
-For example, the `Configure` portion of the API is accessed via the `ConfigureApi` object within the `CognitoApiManager` class.
+After initialization, each Cognito function and endpoint is available for access via convenience methods with the `CognitoApiManager` class, even though their actual implementation is contained within seperate files. 
+
+For example, the `ConfigureApi` object is a private variable within the `CognitoApiManager` with a `Configure()` function, but as a user of this library you can access this function via the `Configure()` function directly from the `CognitoApiManager` class.
 
 ▶ **Initialization & Usage**
 Step 1: Get the singleton instance.

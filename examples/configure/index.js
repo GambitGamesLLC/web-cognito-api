@@ -46,7 +46,6 @@ async function main()
         console.log("Calling CognitoApiManager.Configure()...");
         
         /** @type {ResourcesConfig} */
-        //console.log( "cognitoApiManager.configureApi = " + cognitoApiManager.configureApi );
         const loadedConfig = await cognitoApiManager.Configure(amplifyConfig);
 
         // 4. Display the result

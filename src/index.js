@@ -9,14 +9,10 @@
 // Export the main manager class so users can instantiate it
 export { CognitoApiManager } from './cognito-api-manager.js';
 
-// Re-export the empty object for each types definition file.
-// This allows JSDoc-aware editors to find and use
-// the JSDoc @typedefs for type checking
+// Re-export type definitions
+export * from './configure/configure-api.types.js';
+export * from './sign-up/sign-up-api.types.js';
 
-export * from './cognito-api-manager.js'; // This is for the class
-export * from './cognito-api-manager.js'; // This is for the types
-
-// Re-export the type definitions from the 'joi' schemas
-
-
-// Re-export the error classes
+// Re-export type definitions from the 'joi' schemas
+export * from './configure/configure-api.schemas.js';
+export * from './sign-up/sign-up-api.schemas.js';

@@ -22,21 +22,21 @@ export class CognitoApiManager
     
     //#region PRIVATE - VARIABLES
 
+    /** 
+     * @private
+     * @type {ConfigureApi} 
+     **/
+    #configureApi = null;
+
+    /** 
+     * @private
+     * @type {SignUpApi} 
+     **/
+    #signUpApi = null;
+
     //#endregion
 
     //#region PUBLIC - VARIABLES
-
-    /** 
-     * Reference to the ConfigureAPI object
-     * @type {ConfigureApi} 
-     * */
-    configureApi = null;
-
-    /** 
-     * Reference to the SignUpApi object
-     * @type {SignUpApi} 
-     * */
-    signUpApi = null;
 
     //#endregion
 
@@ -59,8 +59,8 @@ export class CognitoApiManager
         CognitoApiManager.instance = this;
 
         //We only need to generate our helper classes once
-        this.configureApi = new ConfigureApi(this);
-        this.signUpApi = new SignUpApi(this);
+        this.#configureApi = new ConfigureApi(this);
+        this.#signUpApi = new SignUpApi(this);
         
     } //END constructor() Method
 
@@ -97,7 +97,7 @@ export class CognitoApiManager
      * @param {import('@aws-amplify/core').ResourcesConfig} config The 'amplifyconfiguration.json' config file
      * @returns {Promise<import('@aws-amplify/core').ResourcesConfig>} The resources configuration set up with Amplify
      */
-    async Configure( config ){ return this.configureApi.Configure( config ); }
+    async Configure( config ){ return this.#configureApi.Configure( config ); }
 
     //#endregion
 
@@ -114,7 +114,7 @@ export class CognitoApiManager
      * @param {object | null} [attributes] [Optional] An object of user attributes, e.g., { email: 'user@example.com' }
      * @returns {Promise<import('@aws-amplify/auth').SignUpOutput>} The 'SignUpOutput' property returned by Amplify after a user is successfully created in the user pool
      */
-    async SignUp( username, password, attributes ){ return this.signUpApi.SignUp( username, password, attributes ); }
+    async SignUp( username, password, attributes ){ return this.#signUpApi.SignUp( username, password, attributes ); }
 
     //#endregion
 

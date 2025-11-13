@@ -11,13 +11,34 @@ export class CognitoApiManager {
     /**
      * Reference to the ConfigureAPI object
      * @type {ConfigureApi}
+     * @private
      * */
-    configureApi: ConfigureApi;
+    private configureApi;
     /**
      * Reference to the SignUpApi object
      * @type {SignUpApi}
+     * @private
      * */
-    signUpApi: SignUpApi;
+    private signUpApi;
+    /**
+     * Sets the Amplify configuration file
+     *
+     * @documentation https://docs.amplify.aws/javascript/start/connect-to-aws-resources/
+     *
+     * @param {import('@aws-amplify/core').ResourcesConfig} config The 'amplifyconfiguration.json' config file
+     * @returns {Promise<import('@aws-amplify/core').ResourcesConfig>} The resources configuration set up with Amplify
+     */
+    Configure(config: import("@aws-amplify/core").ResourcesConfig): Promise<import("@aws-amplify/core").ResourcesConfig>;
+    /**
+     * Creates a new user within the Cognito user pool.
+     * Check the `SignUpOutput` variable for the next step, usually you'll need to pass in a code to continue sign up
+     *
+     * @documentation https://docs.amplify.aws/javascript/build-a-backend/auth/connect-your-frontend/sign-up/
+     *
+     * @param {string} username The name for the new user. Specific format depends on the user pool settings in your AWS console.
+     * @param {string} password The password for the new user
+     * @param {object | null} [attributes] [Optional] An object of user attributes, e.g., { email: 'user@example.com' }
+     * @returns {Promise<import('@aws-amplify/auth').SignUpOutput>} The 'SignUpOutput' property returned by Amplify after a user is successfully created in the user pool
+     */
+    SignUp(username: string, password: string, attributes?: object | null): Promise<import("@aws-amplify/auth").SignUpOutput>;
 }
-import { ConfigureApi } from './configure/configure-api.js';
-import { SignUpApi } from './sign-up/sign-up-api.js';
