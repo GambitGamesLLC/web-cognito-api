@@ -8,17 +8,8 @@
 
 //#region IMPORTS
 
-// Importing Amplify From the AWS Amplify Lib
-import { Amplify } from '@aws-amplify/core';
-
-// Import the signUp method from the auth library
-import { signUp } from '@aws-amplify/auth';
-
-/**
- * @typedef {import('@aws-amplify/core').ResourcesConfig} ResourcesConfig
- * @typedef {import('@aws-amplify/auth/dist/esm/types').AuthNextSignUpStep} AuthNextSignUpStep
- * @typedef {import('@aws-amplify/auth').SignUpOutput} SignUpOutput
- */
+import { ConfigureApi } from './configure/configure-api.js';
+import { SignUpApi } from './sign-up/sign-up-api.js';
 
 //#endregion
 
@@ -34,6 +25,18 @@ export class CognitoApiManager
     //#endregion
 
     //#region PUBLIC - VARIABLES
+
+    /** 
+     * Reference to the ConfigureAPI object
+     * @type {ConfigureApi} 
+     * */
+    configureApi = null;
+
+    /** 
+     * Reference to the SignUpApi object
+     * @type {SignUpApi} 
+     * */
+    signUpApi = null;
 
     //#endregion
 
@@ -55,6 +58,10 @@ export class CognitoApiManager
         // Sets the singleton reference so we know we've already called the constructor, preventing duplicates
         CognitoApiManager.instance = this;
 
+        //We only need to generate our helper classes once
+        this.configureApi = new ConfigureApi(this);
+        this.signUpApi = new SignUpApi(this);
+        
     } //END constructor() Method
 
     //#endregion
@@ -80,97 +87,34 @@ export class CognitoApiManager
 
     //#endregion
 
-    //#region PUBLIC - CONFIGURE
+    //#region PUBLIC - SHORTCUTS - ConfigureApi
 
     /**
      * Sets the Amplify configuration file
      * 
      * @documentation https://docs.amplify.aws/javascript/start/connect-to-aws-resources/
      * 
-     * @param {ResourcesConfig} config The 'amplifyconfiguration.json' config file
-     * @returns {Promise<ResourcesConfig>} The resources configuration set up with Amplify
+     * @param {import('@aws-amplify/core').ResourcesConfig} config The 'amplifyconfiguration.json' config file
+     * @returns {Promise<import('@aws-amplify/core').ResourcesConfig>} The resources configuration set up with Amplify
      */
-    // ----------------------------------------------------------------- //
-    async Configure( config ) 
-    // ----------------------------------------------------------------- //
-    {
-        if( config === undefined || config === null )
-        {
-            Promise.reject( new Error( "cognito-api-manager.js Configure() passed in 'config' parameter is undefined or null" ) );
-        }
-
-        try
-        {
-            /**
-             * Passes our configuration file into the core Amplify object
-             */
-            Amplify.configure(config);
-
-            return Amplify.getConfig();
-        }
-        catch(error)
-        {
-            Promise.reject( new Error( "cognito-api-manager.js Configure() Error: " + error ) );
-        }
-        
-    } //END Configure() Method
+    async Configure( config ){ return this.configureApi.Configure( config ); }
 
     //#endregion
-    
-    //#region PUBLIC - SIGN UP
+
+    //#region PUBLIC - SHORTCUTS - SignUpApi
 
     /**
-     * Creates a new user within the user pool
+     * Creates a new user within the Cognito user pool. 
+     * Check the `SignUpOutput` variable for the next step, usually you'll need to pass in a code to continue sign up
      * 
      * @documentation https://docs.amplify.aws/javascript/build-a-backend/auth/connect-your-frontend/sign-up/
      * 
      * @param {string} username The name for the new user. Specific format depends on the user pool settings in your AWS console.
      * @param {string} password The password for the new user
-     * @param {object | null} attributes [Optional] An object of user attributes, e.g., { email: 'user@example.com' }
-     * @returns {Promise<SignUpOutput>} The 'SignUpOutput' property returned by Amplify after a user is successfully created in the user pool
+     * @param {object | null} [attributes] [Optional] An object of user attributes, e.g., { email: 'user@example.com' }
+     * @returns {Promise<import('@aws-amplify/auth').SignUpOutput>} The 'SignUpOutput' property returned by Amplify after a user is successfully created in the user pool
      */
-    // ----------------------------------------------------------------- //
-    async SignUp( username, password, attributes ) 
-    // ----------------------------------------------------------------- //
-    {
-        if (!username) 
-        {
-            return Promise.reject( new Error("cognito-api-manager.js SignUp() Error: username cannot be null, undefined, or empty." ) );
-        }
-
-        if (!password) 
-        {
-            return Promise.reject( new Error("cognito-api-manager.js SignUp() Error: password cannot be null, undefined, or empty." ) );
-        }
-
-        if (attributes === undefined || attributes === null) 
-        {
-            attributes = {};
-        }
-
-        try
-        {
-            /**
-             * @type {SignUpOutput} The output of the Amplify signUp request
-             */
-            let signUpOutput = await signUp
-            ({
-                username,
-                password,
-                options: 
-                {
-                    userAttributes: attributes,
-                }
-            });
-
-            return signUpOutput;
-        }
-        catch(error)
-        {
-            return Promise.reject( new Error("cognito-api-manager.js SignUp() Error: " + error ));
-        }
-        
-    } //END SignUp() Method
+    async SignUp( username, password, attributes ){ return this.signUpApi.SignUp( username, password, attributes ); }
 
     //#endregion
 
