@@ -141,7 +141,7 @@ const config = await fetch('../amplifyconfiguration.json');
 // Configure the Amplify Api to connect to our Cognito user pool
 await cognitoApiManager.Configure( config );
 
-// Now you can now use the other Cognito Functions and endpoints via the other objects
+// Now you can now use the other Cognito functions
 await cognitoApiManager.SignUp('testuser@gmail.com', 'password123');
 ```
 
