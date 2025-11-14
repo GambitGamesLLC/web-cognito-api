@@ -5,7 +5,7 @@ This is a JavaScript library with JSDoc for integrating with AWS Cognito. It is 
 
 **Package Name:** web-cognito-api
 
-**Version:** 0.2.0
+**Version:** 0.2.2
 
 **Description:** API Manager for AWS Cognito Services
 
@@ -104,15 +104,19 @@ This will update the `/dist/` folder with our JS+JSDoc files, as well as the typ
 
 -----
 
-## **UNIT TESTING INSTRUCTIONS**
+## **INTEGRATION TESTING INSTRUCTIONS**
 
 Run the following command in Visual Studio Code:
 
 ```
-npm test
+npm run test
 ```
 
-This will run the included unit tests using `jest` as the test runner. The mock service worker (`msw`) will mock server commands and callbacks.
+This will run the included integration tests using `jest` as the test runner.
+
+Since these are real Integration Tests (not unit tests using a mock service worker), your info in `examples/amplifyconfiguration.json` needs to be correct for your tests to run correctly.
+
+This will also take longer to run than unit tests, but the benefit is that we are actually hitting the Cognito Api.
 
 When complete, this will also generate a coverage guide and place it in the `./coverage/` folder at the root of the project.
 
