@@ -9,18 +9,6 @@ export class CognitoApiManager {
      */
     static GetInstance(): CognitoApiManager;
     /**
-     * Reference to the ConfigureAPI object
-     * @type {ConfigureApi}
-     * @private
-     * */
-    private configureApi;
-    /**
-     * Reference to the SignUpApi object
-     * @type {SignUpApi}
-     * @private
-     * */
-    private signUpApi;
-    /**
      * Sets the Amplify configuration file
      *
      * @documentation https://docs.amplify.aws/javascript/start/connect-to-aws-resources/
@@ -41,4 +29,5 @@ export class CognitoApiManager {
      * @returns {Promise<import('@aws-amplify/auth').SignUpOutput>} The 'SignUpOutput' property returned by Amplify after a user is successfully created in the user pool
      */
     SignUp(username: string, password: string, attributes?: object | null): Promise<import("@aws-amplify/auth").SignUpOutput>;
+    #private;
 }

@@ -82,17 +82,15 @@ class p {
 class n {
   //#region PRIVATE - VARIABLES
   /** 
-   * Reference to the ConfigureAPI object
+   * @private
    * @type {ConfigureApi} 
-   * @private
-   * */
-  configureApi = null;
+   **/
+  #r = null;
   /** 
-   * Reference to the SignUpApi object
-   * @type {SignUpApi} 
    * @private
-   * */
-  signUpApi = null;
+   * @type {SignUpApi} 
+   **/
+  #n = null;
   //#endregion
   //#region PUBLIC - VARIABLES
   //#endregion
@@ -104,7 +102,7 @@ class n {
   constructor() {
     if (n.instance)
       return n.instance;
-    n.instance = this, this.configureApi = new u(this), this.signUpApi = new p(this);
+    n.instance = this, this.#r = new u(this), this.#n = new p(this);
   }
   //END constructor() Method
   //#endregion
@@ -129,7 +127,7 @@ class n {
    * @returns {Promise<import('@aws-amplify/core').ResourcesConfig>} The resources configuration set up with Amplify
    */
   async Configure(r) {
-    return this.configureApi.Configure(r);
+    return this.#r.Configure(r);
   }
   //#endregion
   //#region PUBLIC - SHORTCUTS - SignUpApi
@@ -145,7 +143,7 @@ class n {
    * @returns {Promise<import('@aws-amplify/auth').SignUpOutput>} The 'SignUpOutput' property returned by Amplify after a user is successfully created in the user pool
    */
   async SignUp(r, e, i) {
-    return this.signUpApi.SignUp(r, e, i);
+    return this.#n.SignUp(r, e, i);
   }
   //#endregion
 }

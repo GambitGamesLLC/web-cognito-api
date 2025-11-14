@@ -60,7 +60,7 @@ export class ConfigureApi
     {
         if( config === undefined || config === null )
         {
-            Promise.reject( new Error( "web-cognito-api configure.js Configure() passed in 'config' parameter is undefined or null" ) );
+            throw new Error( "web-cognito-api configure.js Configure() passed in 'config' parameter is undefined or null" );
         }
 
         try
@@ -70,11 +70,12 @@ export class ConfigureApi
              */
             Amplify.configure(config);
 
-            return Amplify.getConfig();
+            return await Amplify.getConfig();
         }
         catch(error)
         {
-            Promise.reject( new Error( "web-cognito-api configure.js Configure() Error: " + error ) );
+            // Re-throw the error to ensure the promise is rejected.
+            throw new Error( `web-cognito-api configure.js Configure() Error: ${error.message}` );
         }
         
     } //END Configure() Method

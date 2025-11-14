@@ -68,12 +68,12 @@ export class SignUpApi
     {
         if (!username) 
         {
-            return Promise.reject( new Error("web-cognito-api sign-up-api.js SignUp() Error: username cannot be null, undefined, or empty." ) );
+            throw new Error("web-cognito-api sign-up-api.js SignUp() Error: username cannot be null, undefined, or empty." );
         }
 
         if (!password) 
         {
-            return Promise.reject( new Error("web-cognito-api sign-up-api SignUp() Error: password cannot be null, undefined, or empty." ) );
+            throw new Error("web-cognito-api sign-up-api SignUp() Error: password cannot be null, undefined, or empty." );
         }
 
         if (attributes === undefined || attributes === null) 
@@ -100,7 +100,19 @@ export class SignUpApi
         }
         catch(error)
         {
-            return Promise.reject( new Error("web-cognito-api sign-up-api SignUp() Error: " + error ));
+            // Standardize common Cognito error messages for consistent error handling.
+            let errorMessage = error.message;
+            if (error.name === 'UsernameExistsException') {
+                errorMessage = 'User already exists.';
+            } else if (error.name === 'InvalidPasswordException') {
+                // The specific password policy message can vary, so we generalize it.
+                errorMessage = 'Invalid password format. The password does not meet the policy requirements.';
+            } else if (error.message.includes('Password did not conform with policy')) {
+                // Catch another variant of the password policy error.
+                errorMessage = 'Invalid password format. The password does not meet the policy requirements.';
+            }
+
+            throw new Error(`web-cognito-api sign-up-api SignUp() Error: ${errorMessage}`);
         }
         
     } //END SignUp() Method
