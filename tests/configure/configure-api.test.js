@@ -53,5 +53,18 @@ describe('ConfigureApi', () => {
                 "web-cognito-api configure.js Configure() passed in 'config' parameter is undefined or null"
             );
         });
+
+        it('should throw a custom error when Amplify.configure fails', async () => {
+            // Arrange: Mock Amplify.configure to throw an error
+            const originalErrorMessage = 'Amplify internal error';
+            jest.spyOn(Amplify, 'configure').mockImplementation(() => {
+                throw new Error(originalErrorMessage);
+            });
+
+            // Act & Assert: Expect the method to reject with our custom formatted error message
+            await expect(configureApi.Configure(amplifyConfig)).rejects.toThrow(
+                `web-cognito-api configure.js Configure() Error: ${originalErrorMessage}`
+            );
+        });
     });
 });

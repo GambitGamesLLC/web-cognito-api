@@ -102,12 +102,18 @@ export class SignUpApi
         {
             // Standardize common Cognito error messages for consistent error handling.
             let errorMessage = error.message;
-            if (error.name === 'UsernameExistsException') {
+            
+            if (error.name === 'UsernameExistsException') 
+            {
                 errorMessage = 'User already exists.';
-            } else if (error.name === 'InvalidPasswordException') {
+            } 
+            else if (error.name === 'InvalidPasswordException') 
+            {
                 // The specific password policy message can vary, so we generalize it.
                 errorMessage = 'Invalid password format. The password does not meet the policy requirements.';
-            } else if (error.message.includes('Password did not conform with policy')) {
+            } 
+            else if (error.message.includes('Password did not conform with policy')) 
+            {
                 // Catch another variant of the password policy error.
                 errorMessage = 'Invalid password format. The password does not meet the policy requirements.';
             }

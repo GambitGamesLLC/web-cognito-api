@@ -1,5 +1,5 @@
-import { Amplify as s } from "@aws-amplify/core";
-import { signUp as c } from "@aws-amplify/auth";
+import { Amplify as o } from "@aws-amplify/core";
+import { signUp as p } from "@aws-amplify/auth";
 class u {
   //#region PRIVATE - VARIABLES
   //#endregion
@@ -22,18 +22,19 @@ class u {
    * @returns {Promise<ResourcesConfig>} The resources configuration set up with Amplify
    */
   // ----------------------------------------------------------------- //
-  async Configure(r) {
-    r == null && Promise.reject(new Error("web-cognito-api configure.js Configure() passed in 'config' parameter is undefined or null"));
+  async Configure(e) {
+    if (e == null)
+      throw new Error("web-cognito-api configure.js Configure() passed in 'config' parameter is undefined or null");
     try {
-      return s.configure(r), s.getConfig();
-    } catch (e) {
-      Promise.reject(new Error("web-cognito-api configure.js Configure() Error: " + e));
+      return o.configure(e), await o.getConfig();
+    } catch (r) {
+      throw new Error(`web-cognito-api configure.js Configure() Error: ${r.message}`);
     }
   }
   //END Configure() Method
   //#endregion
 }
-class p {
+class a {
   //#region PRIVATE - VARIABLES
   //#endregion
   //#region PUBLIC - CONSTRUCTOR
@@ -58,22 +59,23 @@ class p {
    * @returns {Promise<SignUpOutput>} The 'SignUpOutput' property returned by Amplify after a user is successfully created in the user pool
    */
   // ----------------------------------------------------------------- //
-  async SignUp(r, e, i) {
-    if (!r)
-      return Promise.reject(new Error("web-cognito-api sign-up-api.js SignUp() Error: username cannot be null, undefined, or empty."));
+  async SignUp(e, r, i) {
     if (!e)
-      return Promise.reject(new Error("web-cognito-api sign-up-api SignUp() Error: password cannot be null, undefined, or empty."));
+      throw new Error("web-cognito-api sign-up-api.js SignUp() Error: username cannot be null, undefined, or empty.");
+    if (!r)
+      throw new Error("web-cognito-api sign-up-api SignUp() Error: password cannot be null, undefined, or empty.");
     i == null && (i = {});
     try {
-      return await c({
-        username: r,
-        password: e,
+      return await p({
+        username: e,
+        password: r,
         options: {
           userAttributes: i
         }
       });
-    } catch (t) {
-      return Promise.reject(new Error("web-cognito-api sign-up-api SignUp() Error: " + t));
+    } catch (s) {
+      let t = s.message;
+      throw s.name === "UsernameExistsException" ? t = "User already exists." : (s.name === "InvalidPasswordException" || s.message.includes("Password did not conform with policy")) && (t = "Invalid password format. The password does not meet the policy requirements."), new Error(`web-cognito-api sign-up-api SignUp() Error: ${t}`);
     }
   }
   //END SignUp() Method
@@ -85,7 +87,7 @@ class n {
    * @private
    * @type {ConfigureApi} 
    **/
-  #r = null;
+  #e = null;
   /** 
    * @private
    * @type {SignUpApi} 
@@ -102,7 +104,7 @@ class n {
   constructor() {
     if (n.instance)
       return n.instance;
-    n.instance = this, this.#r = new u(this), this.#n = new p(this);
+    n.instance = this, this.#e = new u(this), this.#n = new a(this);
   }
   //END constructor() Method
   //#endregion
@@ -126,8 +128,8 @@ class n {
    * @param {import('@aws-amplify/core').ResourcesConfig} config The 'amplifyconfiguration.json' config file
    * @returns {Promise<import('@aws-amplify/core').ResourcesConfig>} The resources configuration set up with Amplify
    */
-  async Configure(r) {
-    return this.#r.Configure(r);
+  async Configure(e) {
+    return this.#e.Configure(e);
   }
   //#endregion
   //#region PUBLIC - SHORTCUTS - SignUpApi
@@ -142,8 +144,8 @@ class n {
    * @param {object | null} [attributes] [Optional] An object of user attributes, e.g., { email: 'user@example.com' }
    * @returns {Promise<import('@aws-amplify/auth').SignUpOutput>} The 'SignUpOutput' property returned by Amplify after a user is successfully created in the user pool
    */
-  async SignUp(r, e, i) {
-    return this.#n.SignUp(r, e, i);
+  async SignUp(e, r, i) {
+    return this.#n.SignUp(e, r, i);
   }
   //#endregion
 }

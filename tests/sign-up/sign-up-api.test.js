@@ -1,13 +1,16 @@
 /**
  * sign-up-api.test.js
  * @jest-environment jsdom
- * @file Test suite for the SignUpApi class.
- * @description This file contains integration tests for the `SignUp` method in the `SignUpApi` class,
- * intended to be run against a live AWS Cognito User Pool.
+ * @file Test suite for the SignUpApi class, containing both unit and integration tests.
+ * @description This file tests the `SignUp` method in the `SignUpApi` class.
+ * It includes unit tests that mock Amplify's `signUp` function to verify error handling,
+ * and integration tests that run against a live AWS Cognito User Pool.
  * @requires {SignUpApi} from '../../src/sign-up/sign-up-api.js'
  */
 
+import { jest, afterEach } from '@jest/globals';
 import { SignUpApi } from '../../src/sign-up/sign-up-api.js';
+import * as AmplifyAuth from '@aws-amplify/auth';
 import { CognitoApiManager } from '../../src/cognito-api-manager.js';
 import amplifyConfig from '../../examples/amplifyconfiguration.json';
 
@@ -21,6 +24,11 @@ const generateUniqueUsername = () => `testuser-${Date.now()}@example.com`;
 describe('SignUpApi', () => {
     let signUpApi;
 
+    afterEach(() => {
+        // Restore any mocks created with jest.spyOn
+        jest.restoreAllMocks();
+    });
+
     beforeEach(async () => {
         // Configure Amplify using the CognitoApiManager before each test.
         // This is necessary for the Amplify library to be initialized.
@@ -29,7 +37,7 @@ describe('SignUpApi', () => {
         signUpApi = new SignUpApi();
     });
 
-    describe('SignUp', () => {
+    describe('SignUp (Integration Tests)', () => {
         it('should successfully sign up a user and return confirmation details', async () => {
             const username = generateUniqueUsername();
             const password = 'Password123!';
@@ -102,6 +110,43 @@ describe('SignUpApi', () => {
             // The default policy requires a minimum length, numbers, symbols, and uppercase/lowercase letters.
             await expect(signUpApi.SignUp(username, password)).rejects.toThrow(
                 'web-cognito-api sign-up-api SignUp() Error: Invalid password format. The password does not meet the policy requirements.'
+            );
+        });
+    });
+
+    describe('SignUp (Unit Tests)', () => {
+        it('should wrap and re-throw an error for InvalidPasswordException', async () => {
+            // Arrange: Mock the signUp function to throw a specific error
+            const cognitoError = new Error('Password does not conform to policy');
+            cognitoError.name = 'InvalidPasswordException';
+            jest.spyOn(AmplifyAuth, 'signUp').mockRejectedValue(cognitoError);
+
+            // Act & Assert
+            await expect(signUpApi.SignUp('user@test.com', 'badpass')).rejects.toThrow(
+                'web-cognito-api sign-up-api SignUp() Error: Invalid password format. The password does not meet the policy requirements.'
+            );
+        });
+
+        it('should wrap and re-throw an error for password policy message', async () => {
+            // Arrange: Mock the signUp function to throw a specific error
+            const cognitoError = new Error('Password did not conform with policy: ...');
+            jest.spyOn(AmplifyAuth, 'signUp').mockRejectedValue(cognitoError);
+
+            // Act & Assert
+            await expect(signUpApi.SignUp('user@test.com', 'badpass')).rejects.toThrow(
+                'web-cognito-api sign-up-api SignUp() Error: Invalid password format. The password does not meet the policy requirements.'
+            );
+        });
+
+        it('should wrap and re-throw a generic error from Amplify', async () => {
+            // Arrange: Mock the signUp function to throw a generic error
+            const originalErrorMessage = 'Network error';
+            const cognitoError = new Error(originalErrorMessage);
+            jest.spyOn(AmplifyAuth, 'signUp').mockRejectedValue(cognitoError);
+
+            // Act & Assert
+            await expect(signUpApi.SignUp('user@test.com', 'GoodPass123!')).rejects.toThrow(
+                `web-cognito-api sign-up-api SignUp() Error: ${originalErrorMessage}`
             );
         });
     });
