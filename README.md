@@ -5,7 +5,7 @@ This is a JavaScript library with JSDoc for integrating with AWS Cognito. It is 
 
 **Package Name:** web-cognito-api
 
-**Version:** 0.2.2
+**Version:** 0.3.0
 
 **Description:** API Manager for AWS Cognito Services
 
@@ -17,11 +17,11 @@ Currently supports core AWS Cognito user pool operations.
 
 - Configure
 - Sign Up
+- Confirm Sign Up
 
 -----
 
 ## **FUTURE FUNCTIONALITY**
-- Confirm Sign Up
 - Sign In
 - Sign Out
 - Get Current Authenticated User
