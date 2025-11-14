@@ -10,6 +10,7 @@
 
 import { ConfigureApi } from './configure/configure-api.js';
 import { SignUpApi } from './sign-up/sign-up-api.js';
+import { ConfirmSignUpApi } from './confirm-sign-up/confirm-sign-up-api.js';
 
 //#endregion
 
@@ -33,6 +34,12 @@ export class CognitoApiManager
      * @type {SignUpApi} 
      **/
     #signUpApi = null;
+
+    /** 
+     * @private
+     * @type {ConfirmSignUpApi} 
+     **/
+    #confirmSignUpApi = null;
 
     //#endregion
 
@@ -61,6 +68,7 @@ export class CognitoApiManager
         //We only need to generate our helper classes once
         this.#configureApi = new ConfigureApi(this);
         this.#signUpApi = new SignUpApi(this);
+        this.#confirmSignUpApi = new ConfirmSignUpApi(this);
         
     } //END constructor() Method
 
@@ -115,6 +123,19 @@ export class CognitoApiManager
      * @returns {Promise<import('@aws-amplify/auth').SignUpOutput>} The 'SignUpOutput' property returned by Amplify after a user is successfully created in the user pool
      */
     async SignUp( username, password, attributes ){ return this.#signUpApi.SignUp( username, password, attributes ); }
+
+    //#endregion
+
+    //#region PUBLIC - SHORTCUTS - ConfirmSignUpApi
+
+    /**
+     * Confirms a new user within the Cognito user pool. 
+     * 
+     * @documentation https://docs.amplify.aws/javascript/build-a-backend/auth/connect-your-frontend/sign-up/
+     * @param {ConfirmSignUpInput} confirmSignUpInput The object holding onto our data used to confirm our account sign up with the Cognito Api
+     * @returns {Promise<import('@aws-amplify/auth').ConfirmSignUpOutput>} The 'ConfirmSignUpOutput' property returned by Amplify after a user confirms sign up
+     */
+    async ConfirmSignUp( confirmSignUpInput ){ return this.#confirmSignUpApi.ConfirmSignUp( confirmSignUpInput ); }
 
     //#endregion
 

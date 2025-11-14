@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cognito API Manager - ConfirmSignUp() Example</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; max-width: 600px; margin: auto; }
+        form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+        input { padding: 8px; font-size: 1em; }
+        button { padding: 10px; font-size: 1em; cursor: pointer; background-color: #007bff; color: white; border: none; }
+        button:hover { background-color: #0056b3; }
+        pre { background-color: #f4f4f4; padding: 10px; border: 1px solid #ddd; white-space: pre-wrap; word-wrap: break-word; }
+    </style>
+</head>
+<body>
+    <h1>Cognito API Manager - ConfirmSignUp() Example</h1>
+    <p>
+        This example demonstrates how to use the <code>ConfirmSignUp()</code> method to verify a new user's account
+        using a confirmation code sent to their email.
+    </p>
+    <p>
+        First, use the <a href="../sign-up/index.html">SignUp Example</a> to create a user. Then, enter the user's email
+        and the confirmation code you received below.
+    </p>
+
+    <form id="confirm-signup-form">
+        <label for="username">Email (Username):</label>
+        <input type="email" id="username" name="username" required>
+
+        <label for="confirmationCode">Confirmation Code:</label>
+        <input type="text" id="confirmationCode" name="confirmationCode" required>
+
+        <button type="submit">Confirm Sign Up</button>
+    </form>
+
+    <h2>API Result:</h2>
+    <pre id="result-output">Waiting for submission...</pre>
+
+    <script type="module" src="./index.js"></script>
+</body>
+</html>

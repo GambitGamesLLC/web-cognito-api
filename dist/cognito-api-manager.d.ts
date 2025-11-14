@@ -29,5 +29,13 @@ export class CognitoApiManager {
      * @returns {Promise<import('@aws-amplify/auth').SignUpOutput>} The 'SignUpOutput' property returned by Amplify after a user is successfully created in the user pool
      */
     SignUp(username: string, password: string, attributes?: object | null): Promise<import("@aws-amplify/auth").SignUpOutput>;
+    /**
+     * Confirms a new user within the Cognito user pool.
+     *
+     * @documentation https://docs.amplify.aws/javascript/build-a-backend/auth/connect-your-frontend/sign-up/
+     * @param {ConfirmSignUpInput} confirmSignUpInput The object holding onto our data used to confirm our account sign up with the Cognito Api
+     * @returns {Promise<import('@aws-amplify/auth').ConfirmSignUpOutput>} The 'ConfirmSignUpOutput' property returned by Amplify after a user confirms sign up
+     */
+    ConfirmSignUp(confirmSignUpInput: ConfirmSignUpInput): Promise<import("@aws-amplify/auth").ConfirmSignUpOutput>;
     #private;
 }
