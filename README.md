@@ -23,13 +23,22 @@ Currently supports core AWS Cognito user pool operations.
 -----
 
 ## **FUTURE FUNCTIONALITY**
-- Sign In
-- Sign Out
-- Get Current Authenticated User
-- Get Current User Session
-- Refresh Session
-- Forgot Password
-- Confirm Forgot Password
+- DeleteAccount
+- SignIn
+- ConfirmSignIn
+- SignOut
+- ResetPassword
+- ConfirmResetPassword
+- UpdatePassword
+- GetCurrentUser
+- RetrieveUserAttributes
+- UpdateUserAttributes
+- DeleteUserArributes
+- FetchAuthSession
+- FetchAuthSessionOnLoad
+- SignInWithGoogle
+- SignInWithFacebook
+- SignInWithApple
 
 -----
 
