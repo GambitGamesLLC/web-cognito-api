@@ -140,14 +140,17 @@ After initialization, each Cognito function and endpoint is available for access
 
 For example, the `ConfigureApi` object is a private variable within the `CognitoApiManager` with a `Configure()` function, but as a user of this library you can access this function via the `Configure()` function directly from the `CognitoApiManager` class.
 
-▶ **Initialization & Usage**
-Step 1: Get the singleton instance.
+▶ **Initialization & Usage Example**
 
 ```javascript
 import { CognitoApiManager } from 'web-cognito-api';
+import * from 'web-cognito-api'; //Import all type definitions
 
 // Get the singleton instance
 const cognitoApiManager = CognitoApiManager.GetInstance();
+
+// Your project will need an 'amplifyconfiguration.json' file,
+// Check out the 'examples/amplifyconfiguration.json' in this repository
 
 // Fetch the amplifyconfiguration.json file
 const config = await fetch('../amplifyconfiguration.json');
@@ -158,12 +161,23 @@ await cognitoApiManager.Configure( config );
 // Now you can now use the other Cognito functions
 // Here's an example of using the SignUp function
 
-// Create a signUpInput object
+// Create a signUpInput object with some new user info
 let signUpInput = {};
 signUpInput.username = 'testuser@gmail.com';
 signUpInput.password = 'password123';
 
-let signUpOutput = await cognitoApiManager.SignUp( signUpInput );
+//Wrap asynchronous promises in a try/catch block
+try 
+{
+    //Results are stored, allowing you to decide what to do next
+    let signUpOutput = await cognitoApiManager.SignUp( signUpInput );
+}
+catch( error )
+{
+    console.log( error );
+}
+
+//Check out the 'Examples' folder in this repository for full length examples
 ```
 
 -----
