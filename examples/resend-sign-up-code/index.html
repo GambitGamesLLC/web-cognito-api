@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cognito API Manager - ResendSignUpCode() Example</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; max-width: 600px; margin: auto; }
+        form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+        input { padding: 8px; font-size: 1em; }
+        .test-buttons { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        button { padding: 10px; font-size: 1em; cursor: pointer; background-color: #007bff; color: white; border: none; }
+        button:hover { background-color: #0056b3; }
+        pre { background-color: #f4f4f4; padding: 10px; border: 1px solid #ddd; white-space: pre-wrap; word-wrap: break-word; }
+    </style>
+</head>
+<body>
+    <h1>Cognito API Manager - ResendSignUpCode() Example</h1>
+    <p>This example demonstrates how to use the <code>ResendSignUpCode()</code> method to resend a confirmation code to a user who has not yet confirmed their account.</p>
+    <p>Enter the email (username) of an unconfirmed user and click "Resend Code". The result will be displayed below the form.</p>
+
+    <div class="test-buttons">
+        <button type="button" id="btn-gen-temp">Generate Temp Email</button>
+        <button type="button" id="btn-existing-email">Use Existing Email</button>
+        <button type="button" id="btn-invalid-email">Use Invalid Email</button>
+    </div>
+
+    <div id="temp-email-info" style="margin-bottom: 20px;"></div>
+
+    <form id="resend-code-form">
+        <label for="email">Email (Username):</label>
+        <input type="email" id="email" name="email" required>
+
+        <button type="submit">Resend Code</button>
+    </form>
+
+    <h2>API Result:</h2>
+    <pre id="result-output">Waiting for submission...</pre>
+    <div id="copy-container" style="margin-top: 10px;"></div>
+
+    <script type="module" src="./index.js"></script>
+</body>
+</html>

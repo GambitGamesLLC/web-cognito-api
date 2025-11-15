@@ -15,11 +15,13 @@ import { CognitoApiManager } from '../src/cognito-api-manager.js';
 import { ConfigureApi } from '../src/configure/configure-api.js';
 import { SignUpApi } from '../src/sign-up/sign-up-api.js';
 import { ConfirmSignUpApi } from '../src/confirm-sign-up/confirm-sign-up-api.js';
+import { ResendSignUpCodeApi } from '../src/resend-sign-up-code/resend-sign-up-code-api.js';
 
 // Mock the API helper classes to isolate the CognitoApiManager for testing.
 jest.mock('../src/configure/configure-api.js');
 jest.mock('../src/sign-up/sign-up-api.js');
 jest.mock('../src/confirm-sign-up/confirm-sign-up-api.js');
+jest.mock('../src/resend-sign-up-code/resend-sign-up-code-api.js');
 
 describe('CognitoApiManager', () => {
 
@@ -30,6 +32,7 @@ describe('CognitoApiManager', () => {
         ConfigureApi.mockClear();
         SignUpApi.mockClear();
         ConfirmSignUpApi.mockClear();
+        ResendSignUpCodeApi.mockClear();
     });
 
     describe('Singleton Pattern', () => {
@@ -58,15 +61,17 @@ describe('CognitoApiManager', () => {
     });
 
     describe('Constructor', () => {
-        it('should instantiate ConfigureApi, SignUpApi, and ConfirmSignUpApi on creation', () => {
+        it('should instantiate ConfigureApi, SignUpApi, ConfirmSignUpApi, and ResendSignUpCodeApi on creation', () => {
             const manager = CognitoApiManager.GetInstance();
             expect(ConfigureApi).toHaveBeenCalledTimes(1);
             expect(SignUpApi).toHaveBeenCalledTimes(1);
             expect(ConfirmSignUpApi).toHaveBeenCalledTimes(1);
+            expect(ResendSignUpCodeApi).toHaveBeenCalledTimes(1);
             // Verify that the manager instance itself is passed to the helper constructors
             expect(ConfigureApi).toHaveBeenCalledWith(manager);
             expect(SignUpApi).toHaveBeenCalledWith(manager);
             expect(ConfirmSignUpApi).toHaveBeenCalledWith(manager);
+            expect(ResendSignUpCodeApi).toHaveBeenCalledWith(manager);
         });
 
         it('should not re-instantiate helper classes on subsequent instantiations', () => {
@@ -78,6 +83,7 @@ describe('CognitoApiManager', () => {
             expect(ConfigureApi).toHaveBeenCalledTimes(1);
             expect(SignUpApi).toHaveBeenCalledTimes(1);
             expect(ConfirmSignUpApi).toHaveBeenCalledTimes(1);
+            expect(ResendSignUpCodeApi).toHaveBeenCalledTimes(1);
         });
     });
 
@@ -86,6 +92,7 @@ describe('CognitoApiManager', () => {
         let mockConfigure;
         let mockSignUp;
         let mockConfirmSignUp;
+        let mockResendSignUpCode;
 
         beforeEach(() => {
             manager = CognitoApiManager.GetInstance();
@@ -93,11 +100,13 @@ describe('CognitoApiManager', () => {
             const configureApiInstance = ConfigureApi.mock.instances[0];
             const signUpApiInstance = SignUpApi.mock.instances[0];
             const confirmSignUpApiInstance = ConfirmSignUpApi.mock.instances[0];
+            const resendSignUpCodeApiInstance = ResendSignUpCodeApi.mock.instances[0];
 
             // Spy on the methods of the mock instances
             mockConfigure = jest.spyOn(configureApiInstance, 'Configure');
             mockSignUp = jest.spyOn(signUpApiInstance, 'SignUp');
             mockConfirmSignUp = jest.spyOn(confirmSignUpApiInstance, 'ConfirmSignUp');
+            mockResendSignUpCode = jest.spyOn(resendSignUpCodeApiInstance, 'ResendSignUpCode');
         });
 
         it('should call ConfigureApi.Configure when Configure is called', async () => {
@@ -109,13 +118,11 @@ describe('CognitoApiManager', () => {
         });
 
         it('should call SignUpApi.SignUp when SignUp is called', async () => {
-            const username = 'test@example.com';
-            const password = 'Password123!';
-            const attributes = { email: username };
-            await manager.SignUp(username, password, attributes);
+            const signUpInput = { username: 'test@example.com', password: 'Password123!', options: { userAttributes: { email: 'test@example.com' } } };
+            await manager.SignUp(signUpInput);
 
             expect(mockSignUp).toHaveBeenCalledTimes(1);
-            expect(mockSignUp).toHaveBeenCalledWith(username, password, attributes);
+            expect(mockSignUp).toHaveBeenCalledWith(signUpInput);
         });
 
         it('should call ConfirmSignUpApi.ConfirmSignUp when ConfirmSignUp is called', async () => {
@@ -127,6 +134,16 @@ describe('CognitoApiManager', () => {
 
             expect(mockConfirmSignUp).toHaveBeenCalledTimes(1);
             expect(mockConfirmSignUp).toHaveBeenCalledWith(confirmSignUpInput);
+        });
+
+        it('should call ResendSignUpCodeApi.ResendSignUpCode when ResendSignUpCode is called', async () => {
+            const resendSignUpCodeInput = {
+                username: 'test@example.com'
+            };
+            await manager.ResendSignUpCode(resendSignUpCodeInput);
+
+            expect(mockResendSignUpCode).toHaveBeenCalledTimes(1);
+            expect(mockResendSignUpCode).toHaveBeenCalledWith(resendSignUpCodeInput);
         });
     });
 });

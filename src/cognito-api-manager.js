@@ -11,6 +11,16 @@
 import { ConfigureApi } from './configure/configure-api.js';
 import { SignUpApi } from './sign-up/sign-up-api.js';
 import { ConfirmSignUpApi } from './confirm-sign-up/confirm-sign-up-api.js';
+import { ResendSignUpCodeApi } from './resend-sign-up-code/resend-sign-up-code-api.js';
+
+/**
+ * @typedef {import('@aws-amplify/core').ResourcesConfig} ResourcesConfig
+ * @typedef {import('@aws-amplify/auth/dist/esm/types').AuthNextSignUpStep} AuthNextSignUpStep
+ * @typedef {import('@aws-amplify/auth').SignUpInput} SignUpInput
+ * @typedef {import('@aws-amplify/auth').SignUpOutput} SignUpOutput
+ * @typedef {import('@aws-amplify/auth').ResendSignUpCodeInput} ResendSignUpCodeInput
+ * @typedef {import('@aws-amplify/auth').ResendSignUpCodeOutput} ResendSignUpCodeOutput
+ */
 
 //#endregion
 
@@ -41,6 +51,12 @@ export class CognitoApiManager
      **/
     #confirmSignUpApi = null;
 
+    /** 
+     * @private
+     * @type {ResendSignUpCodeApi} 
+     **/
+    #resendSignUpCodeApi = null;
+
     //#endregion
 
     //#region PUBLIC - VARIABLES
@@ -69,7 +85,8 @@ export class CognitoApiManager
         this.#configureApi = new ConfigureApi(this);
         this.#signUpApi = new SignUpApi(this);
         this.#confirmSignUpApi = new ConfirmSignUpApi(this);
-        
+        this.#resendSignUpCodeApi = new ResendSignUpCodeApi(this);
+
     } //END constructor() Method
 
     //#endregion
@@ -102,8 +119,8 @@ export class CognitoApiManager
      * 
      * @documentation https://docs.amplify.aws/javascript/start/connect-to-aws-resources/
      * 
-     * @param {import('@aws-amplify/core').ResourcesConfig} config The 'amplifyconfiguration.json' config file
-     * @returns {Promise<import('@aws-amplify/core').ResourcesConfig>} The resources configuration set up with Amplify
+     * @param {ResourcesConfig} config The 'amplifyconfiguration.json' config file
+     * @returns {Promise<ResourcesConfig>} The resources configuration set up with Amplify
      */
     async Configure( config ){ return this.#configureApi.Configure( config ); }
 
@@ -113,16 +130,14 @@ export class CognitoApiManager
 
     /**
      * Creates a new user within the Cognito user pool. 
-     * Check the `SignUpOutput` variable for the next step, usually you'll need to pass in a code to continue sign up
+     * Check the `SignUpOutput` variable for the next step, usually you'll need to pass in a confimration code to continue sign up
      * 
      * @documentation https://docs.amplify.aws/javascript/build-a-backend/auth/connect-your-frontend/sign-up/
      * 
-     * @param {string} username The name for the new user. Specific format depends on the user pool settings in your AWS console.
-     * @param {string} password The password for the new user
-     * @param {object | null} [attributes] [Optional] An object of user attributes, e.g., { email: 'user@example.com' }
-     * @returns {Promise<import('@aws-amplify/auth').SignUpOutput>} The 'SignUpOutput' property returned by Amplify after a user is successfully created in the user pool
+     * @param {SignUpInput} signUpInput The input object used to sign up a new user to our Cognito User Pool
+     * @returns {Promise<SignUpOutput>} The 'SignUpOutput' property returned by Amplify after a user is successfully created in the user pool
      */
-    async SignUp( username, password, attributes ){ return this.#signUpApi.SignUp( username, password, attributes ); }
+    async SignUp( signUpInput ){ return this.#signUpApi.SignUp( signUpInput ); }
 
     //#endregion
 
@@ -136,6 +151,19 @@ export class CognitoApiManager
      * @returns {Promise<import('@aws-amplify/auth').ConfirmSignUpOutput>} The 'ConfirmSignUpOutput' property returned by Amplify after a user confirms sign up
      */
     async ConfirmSignUp( confirmSignUpInput ){ return this.#confirmSignUpApi.ConfirmSignUp( confirmSignUpInput ); }
+
+    //#endregion
+
+    //#region PUBLIC - SHORTCUTS - ResendSignUpCodeApi
+
+    /**
+     * Resends the new user sign up confirmation code 
+     * 
+     * @documentation https://docs.amplify.aws/javascript/build-a-backend/auth/connect-your-frontend/multi-step-sign-in/#confirm-signup
+     * @param {ResendSignUpCodeInput} resendSignUpCodeInput The object holding onto our data used to resend our new user confirmation code
+     * @returns {Promise<ResendSignUpCodeOutput>} The 'ResendSignUpCodeOutput' property returned by Amplify after resending a new user confirmation code
+     */
+    async ResendSignUpCode( resendSignUpCodeInput ){ return this.#resendSignUpCodeApi.ResendSignUpCode( resendSignUpCodeInput ); }
 
     //#endregion
 

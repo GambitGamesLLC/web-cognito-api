@@ -7,7 +7,7 @@ This is a JavaScript library with JSDoc for integrating with AWS Cognito. It is 
 
 **Version:** 0.3.0
 
-**Description:** API Manager for AWS Cognito Services
+**Description:** API Manager for AWS Cognito Services using the Amplify Api v6
 
 -----
 
@@ -18,6 +18,7 @@ Currently supports core AWS Cognito user pool operations.
 - Configure
 - Sign Up
 - Confirm Sign Up
+- Resend Sign Up Code
 
 -----
 
@@ -146,7 +147,14 @@ const config = await fetch('../amplifyconfiguration.json');
 await cognitoApiManager.Configure( config );
 
 // Now you can now use the other Cognito functions
-await cognitoApiManager.SignUp('testuser@gmail.com', 'password123');
+// Here's an example of using the SignUp function
+
+// Create a signUpInput object
+let signUpInput = {};
+signUpInput.username = 'testuser@gmail.com';
+signUpInput.password = 'password123';
+
+let signUpOutput = await cognitoApiManager.SignUp( signUpInput );
 ```
 
 -----

@@ -1,6 +1,6 @@
-import { Amplify as c } from "@aws-amplify/core";
-import { signUp as p, confirmSignUp as a } from "@aws-amplify/auth";
-class u {
+import { Amplify as t } from "@aws-amplify/core";
+import { signUp as o, confirmSignUp as c, resendSignUpCode as p } from "@aws-amplify/auth";
+class a {
   //#region PRIVATE - VARIABLES
   //#endregion
   //#region PUBLIC - CONSTRUCTOR
@@ -22,11 +22,11 @@ class u {
    * @returns {Promise<ResourcesConfig>} The resources configuration set up with Amplify
    */
   // ----------------------------------------------------------------- //
-  async Configure(r) {
-    if (r == null)
+  async Configure(e) {
+    if (e == null)
       throw new Error("web-cognito-api configure.js Configure() passed in 'config' parameter is undefined or null");
     try {
-      return c.configure(r), await c.getConfig();
+      return t.configure(e), await t.getConfig();
     } catch (n) {
       throw new Error(`web-cognito-api configure.js Configure() Error: ${n.message}`);
     }
@@ -34,7 +34,7 @@ class u {
   //END Configure() Method
   //#endregion
 }
-class f {
+class u {
   //#region PRIVATE - VARIABLES
   //#endregion
   //#region PUBLIC - CONSTRUCTOR
@@ -49,39 +49,28 @@ class f {
   //#region PUBLIC - SIGN UP
   /**
    * Creates a new user within the Cognito user pool. 
-   * Check the `SignUpOutput` variable for the next step, usually you'll need to pass in a code to continue sign up
+   * Check the `SignUpOutput` variable for the next step, usually you'll need to pass in a confimration code to continue sign up
    * 
    * @documentation https://docs.amplify.aws/javascript/build-a-backend/auth/connect-your-frontend/sign-up/
    * 
-   * @param {string} username The name for the new user. Specific format depends on the user pool settings in your AWS console.
-   * @param {string} password The password for the new user
-   * @param {object | null} attributes [Optional] An object of user attributes, e.g., { email: 'user@example.com' }
+   * @param {SignUpInput} signUpInput The input object used to sign up a new user to our Cognito User Pool
    * @returns {Promise<SignUpOutput>} The 'SignUpOutput' property returned by Amplify after a user is successfully created in the user pool
    */
   // ----------------------------------------------------------------- //
-  async SignUp(r, n, e) {
-    if (!r)
-      throw new Error("web-cognito-api sign-up-api.js SignUp() Error: username cannot be null, undefined, or empty.");
-    if (!n)
-      throw new Error("web-cognito-api sign-up-api SignUp() Error: password cannot be null, undefined, or empty.");
-    e == null && (e = {});
+  async SignUp(e) {
+    if (e == null)
+      throw new Error("web-cognito-api sign-up-api.js SignUp() Error: signUpInput cannot be null, undefined, or empty.");
     try {
-      return await p({
-        username: r,
-        password: n,
-        options: {
-          userAttributes: e
-        }
-      });
-    } catch (s) {
-      let o = s.message;
-      throw s.name === "UsernameExistsException" ? o = "User already exists." : (s.name === "InvalidPasswordException" || s.message.includes("Password did not conform with policy")) && (o = "Invalid password format. The password does not meet the policy requirements."), new Error(`web-cognito-api sign-up-api SignUp() Error: ${o}`);
+      return await o(e);
+    } catch (n) {
+      let r = n.message;
+      throw n.name === "UsernameExistsException" ? r = "User already exists." : (n.name === "InvalidPasswordException" || n.message.includes("Password did not conform with policy")) && (r = "Invalid password format. The password does not meet the policy requirements."), new Error(`web-cognito-api sign-up-api SignUp() Error: ${r}`);
     }
   }
   //END SignUp() Method
   //#endregion
 }
-class l {
+class d {
   //#region PRIVATE - VARIABLES
   //#endregion
   //#region PUBLIC - CONSTRUCTOR
@@ -102,15 +91,49 @@ class l {
    * @returns {Promise<ConfirmSignUpOutput>} The 'ConfirmSignUpOutput' property returned by Amplify after a user confirms sign up
    */
   // ----------------------------------------------------------------- //
-  async ConfirmSignUp(r) {
+  async ConfirmSignUp(e) {
     try {
-      return console.log(r), await a(r);
+      return console.log(e), await c(e);
     } catch (n) {
-      const e = n.message;
-      throw new Error(`ConfirmSignUp Error: ${e}`);
+      const r = n.message;
+      throw new Error(`ConfirmSignUp Error: ${r}`);
     }
   }
   //END ConfirmSignUp() Method
+  //#endregion
+}
+class g {
+  //#region PRIVATE - VARIABLES
+  //#endregion
+  //#region PUBLIC - CONSTRUCTOR
+  /**
+   * Constructor for the Api
+   */
+  //----------------------------------------------//
+  constructor() {
+  }
+  //END Constructor Method
+  //#endregion
+  //#region PUBLIC - RESEND SIGN UP CODE
+  /**
+   * Resends the new user sign up confirmation code 
+   * 
+   * @documentation https://docs.amplify.aws/javascript/build-a-backend/auth/connect-your-frontend/multi-step-sign-in/#confirm-signup
+   * @param {ResendSignUpCodeInput} resendSignUpCodeInput The object holding onto our data used to resend our new user confirmation code
+   * @returns {Promise<ResendSignUpCodeOutput>} The 'ResendSignUpCodeOutput' property returned by Amplify after resending a new user confirmation code
+   */
+  // ----------------------------------------------------------------- //
+  async ResendSignUpCode(e) {
+    if (e == null)
+      throw new Error("web-cognito-api resend-sign-up-code-api.js ResendSignUpCode() Error: resendSignUpCodeInput cannot be null, undefined, or empty.");
+    try {
+      return await p(e);
+    } catch (n) {
+      let r = n.message;
+      throw new Error(`web-cognito-api resend-sign-up-code-api ResendSignUpCode() Error: ${r}`);
+    }
+  }
+  //END ResendSignUpCode() Method
   //#endregion
 }
 class i {
@@ -119,7 +142,7 @@ class i {
    * @private
    * @type {ConfigureApi} 
    **/
-  #r = null;
+  #e = null;
   /** 
    * @private
    * @type {SignUpApi} 
@@ -129,7 +152,12 @@ class i {
    * @private
    * @type {ConfirmSignUpApi} 
    **/
-  #e = null;
+  #r = null;
+  /** 
+   * @private
+   * @type {ResendSignUpCodeApi} 
+   **/
+  #i = null;
   //#endregion
   //#region PUBLIC - VARIABLES
   //#endregion
@@ -141,7 +169,7 @@ class i {
   constructor() {
     if (i.instance)
       return i.instance;
-    i.instance = this, this.#r = new u(this), this.#n = new f(this), this.#e = new l(this);
+    i.instance = this, this.#e = new a(this), this.#n = new u(this), this.#r = new d(this), this.#i = new g(this);
   }
   //END constructor() Method
   //#endregion
@@ -162,27 +190,25 @@ class i {
    * 
    * @documentation https://docs.amplify.aws/javascript/start/connect-to-aws-resources/
    * 
-   * @param {import('@aws-amplify/core').ResourcesConfig} config The 'amplifyconfiguration.json' config file
-   * @returns {Promise<import('@aws-amplify/core').ResourcesConfig>} The resources configuration set up with Amplify
+   * @param {ResourcesConfig} config The 'amplifyconfiguration.json' config file
+   * @returns {Promise<ResourcesConfig>} The resources configuration set up with Amplify
    */
-  async Configure(r) {
-    return this.#r.Configure(r);
+  async Configure(e) {
+    return this.#e.Configure(e);
   }
   //#endregion
   //#region PUBLIC - SHORTCUTS - SignUpApi
   /**
    * Creates a new user within the Cognito user pool. 
-   * Check the `SignUpOutput` variable for the next step, usually you'll need to pass in a code to continue sign up
+   * Check the `SignUpOutput` variable for the next step, usually you'll need to pass in a confimration code to continue sign up
    * 
    * @documentation https://docs.amplify.aws/javascript/build-a-backend/auth/connect-your-frontend/sign-up/
    * 
-   * @param {string} username The name for the new user. Specific format depends on the user pool settings in your AWS console.
-   * @param {string} password The password for the new user
-   * @param {object | null} [attributes] [Optional] An object of user attributes, e.g., { email: 'user@example.com' }
-   * @returns {Promise<import('@aws-amplify/auth').SignUpOutput>} The 'SignUpOutput' property returned by Amplify after a user is successfully created in the user pool
+   * @param {SignUpInput} signUpInput The input object used to sign up a new user to our Cognito User Pool
+   * @returns {Promise<SignUpOutput>} The 'SignUpOutput' property returned by Amplify after a user is successfully created in the user pool
    */
-  async SignUp(r, n, e) {
-    return this.#n.SignUp(r, n, e);
+  async SignUp(e) {
+    return this.#n.SignUp(e);
   }
   //#endregion
   //#region PUBLIC - SHORTCUTS - ConfirmSignUpApi
@@ -193,8 +219,20 @@ class i {
    * @param {ConfirmSignUpInput} confirmSignUpInput The object holding onto our data used to confirm our account sign up with the Cognito Api
    * @returns {Promise<import('@aws-amplify/auth').ConfirmSignUpOutput>} The 'ConfirmSignUpOutput' property returned by Amplify after a user confirms sign up
    */
-  async ConfirmSignUp(r) {
-    return this.#e.ConfirmSignUp(r);
+  async ConfirmSignUp(e) {
+    return this.#r.ConfirmSignUp(e);
+  }
+  //#endregion
+  //#region PUBLIC - SHORTCUTS - ResendSignUpCodeApi
+  /**
+   * Resends the new user sign up confirmation code 
+   * 
+   * @documentation https://docs.amplify.aws/javascript/build-a-backend/auth/connect-your-frontend/multi-step-sign-in/#confirm-signup
+   * @param {ResendSignUpCodeInput} resendSignUpCodeInput The object holding onto our data used to resend our new user confirmation code
+   * @returns {Promise<ResendSignUpCodeOutput>} The 'ResendSignUpCodeOutput' property returned by Amplify after resending a new user confirmation code
+   */
+  async ResendSignUpCode(e) {
+    return this.#i.ResendSignUpCode(e);
   }
   //#endregion
 }

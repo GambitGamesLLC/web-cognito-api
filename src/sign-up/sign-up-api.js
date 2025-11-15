@@ -18,8 +18,7 @@ import { Amplify } from '@aws-amplify/core';
 import { signUp } from '@aws-amplify/auth';
 
 /**
- * @typedef {import('@aws-amplify/core').ResourcesConfig} ResourcesConfig
- * @typedef {import('@aws-amplify/auth/dist/esm/types').AuthNextSignUpStep} AuthNextSignUpStep
+ * @typedef {import('@aws-amplify/auth').SignUpInput } SignUpInput
  * @typedef {import('@aws-amplify/auth').SignUpOutput} SignUpOutput
  */
 
@@ -53,32 +52,20 @@ export class SignUpApi
 
     /**
      * Creates a new user within the Cognito user pool. 
-     * Check the `SignUpOutput` variable for the next step, usually you'll need to pass in a code to continue sign up
+     * Check the `SignUpOutput` variable for the next step, usually you'll need to pass in a confimration code to continue sign up
      * 
      * @documentation https://docs.amplify.aws/javascript/build-a-backend/auth/connect-your-frontend/sign-up/
      * 
-     * @param {string} username The name for the new user. Specific format depends on the user pool settings in your AWS console.
-     * @param {string} password The password for the new user
-     * @param {object | null} attributes [Optional] An object of user attributes, e.g., { email: 'user@example.com' }
+     * @param {SignUpInput} signUpInput The input object used to sign up a new user to our Cognito User Pool
      * @returns {Promise<SignUpOutput>} The 'SignUpOutput' property returned by Amplify after a user is successfully created in the user pool
      */
     // ----------------------------------------------------------------- //
-    async SignUp( username, password, attributes ) 
+    async SignUp( signUpInput ) 
     // ----------------------------------------------------------------- //
     {
-        if (!username) 
+        if( signUpInput === undefined || signUpInput === null )
         {
-            throw new Error("web-cognito-api sign-up-api.js SignUp() Error: username cannot be null, undefined, or empty." );
-        }
-
-        if (!password) 
-        {
-            throw new Error("web-cognito-api sign-up-api SignUp() Error: password cannot be null, undefined, or empty." );
-        }
-
-        if (attributes === undefined || attributes === null) 
-        {
-            attributes = {};
+            throw new Error("web-cognito-api sign-up-api.js SignUp() Error: signUpInput cannot be null, undefined, or empty." );
         }
 
         try
@@ -86,15 +73,7 @@ export class SignUpApi
             /**
              * @type {SignUpOutput} The output of the Amplify signUp request
              */
-            let signUpOutput = await signUp
-            ({
-                username,
-                password,
-                options: 
-                {
-                    userAttributes: attributes,
-                }
-            });
+            let signUpOutput = await signUp( signUpInput);
 
             return signUpOutput;
         }

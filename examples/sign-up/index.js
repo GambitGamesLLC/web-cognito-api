@@ -61,9 +61,15 @@ async function handleSignUp(event, cognitoApiManager) {
 
     try {
         console.log(`Attempting to sign up user: ${email}`);
+
+        //Create a SignUpInput object
+        let signUpInput = {};
+        signUpInput.username = email;
+        signUpInput.password = password;
+
         // Call the SignUp method. We pass the email as an attribute as well,
         // which is a common requirement for Cognito User Pools.
-        const result = await cognitoApiManager.SignUp(email, password, { email: email });
+        const result = await cognitoApiManager.SignUp( signUpInput);
 
         console.log("SignUp successful:", result);
         // Log the delivery details. This shows where Cognito attempted to send the code.
