@@ -1,6 +1,6 @@
 {
   "name": "web-cognito-api",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "API Manager for AWS Cognito Services",
   "main": "./dist/web-cognito-api.es.js",
   "types": "dist/index.d.ts",

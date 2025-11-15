@@ -5,7 +5,7 @@ This is a JavaScript library with JSDoc for integrating with AWS Cognito. It is 
 
 **Package Name:** web-cognito-api
 
-**Version:** 0.3.0
+**Version:** 0.4.0
 
 **Description:** API Manager for AWS Cognito Services using the Amplify Api v6
 
